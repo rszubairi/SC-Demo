@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en" style="height: auto;">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>iScreening - AI Enhanced Shariah Compliance System</title>
+    <!-- Bootstrap datepicker CSS -->
+    <link href="./Review Company - iScreening_files/datepicker3.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/normalize.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/font.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/summernote.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/summernote-bs3.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/style.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/mystyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="print" href="./Review Company - iScreening_files/print.css">
+    <link href="./Review Company - iScreening_files/jquery.fileupload.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/infragistics.theme.css" rel="stylesheet">
+    <link href="./Review Company - iScreening_files/infragistics.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/all.min.css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/adminlte.min.css">
+    <script type="text/javascript" src="./Review Company - iScreening_files/modernizr-2.6.2.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/DXR.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/highcharts.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/highcharts-3d.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/exporting.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/drilldown.js.download"></script>
+    <script src="./Review Company - iScreening_files/jquery.fileupload.js.download" type="text/javascript"></script>
+    <script src="./Review Company - iScreening_files/jquery.iframe-transport.js.download"
+        type="text/javascript"></script>
+    <script src="./Review Company - iScreening_files/infragistics.core.js.download" type="text/javascript"></script>
+    <script src="./Review Company - iScreening_files/infragistics.lob.js.download" type="text/javascript"></script>
+    <link rel="stylesheet" href="./Review Company - iScreening_files/DXR.css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/dx.common.css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/bluerev.light.custom.css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/SiteNew.css">
+    <style>
+        /* ==========================================================================
+   Benchmark-specific layout styles & dynamic section toggles
+   ========================================================================== */
+        .benchmark-section {
+            display: none;
+        }
+
+        .benchmark-section.active {
+            display: block;
+        }
+
+        .benchmark-required {
+            border-left: 3px solid #3b82f6;
+            padding-left: 12px;
+            background: #f0f7ff;
+        }
+
+        .benchmark-optional {
+            opacity: 0.6;
+        }
+
+        .denominator-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 6px;
+        }
+
+        .denominator-badge.total-assets {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .denominator-badge.market-cap {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .benchmark-info-panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .benchmark-info-panel h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .benchmark-info-panel .info-row {
+            font-size: 12px;
+            color: #64748b;
+            padding: 3px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .benchmark-info-panel .info-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Threshold comparison table */
+        .threshold-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+
+        .threshold-table th {
+            background: #f1f5f9;
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .threshold-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+
+        .threshold-table .current-benchmark {
+            background: #eff6ff;
+            font-weight: 600;
+        }
+
+        /* Benchmark tab selector */
+        .bmk-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+
+        .bmk-tab {
+            padding: 8px 14px;
+            border-radius: 6px 6px 0 0;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            color: #64748b;
+            background: transparent;
+        }
+
+        .bmk-tab:hover {
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .bmk-tab.active {
+            background: white;
+            border-color: #e2e8f0 #e2e8f0 white;
+            color: #1e40af;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        /* Section help tooltips */
+        .help-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #64748b;
+            cursor: help;
+            margin-left: 5px;
+        }
+
+        .help-icon:hover {
+            background: #cbd5e1;
+        }
+
+        /* Denominator selector row */
+        .denominator-row {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .denominator-row label {
+            font-weight: 600;
+            font-size: 12px;
+            color: #475569;
+            margin: 0;
+        }
+
+        .denominator-row .badge-count {
+            background: #dbeafe;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+
+        /* Contextual field groups */
+        .field-group-mandatory {}
+
+        .field-group-conditional {
+            border-left: 3px solid #f59e0b;
+            padding-left: 12px;
+        }
+
+        .field-group-conditional .hint-text {
+            font-size: 11px;
+            color: #f59e0b;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        #dynamic-layout-section {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Responsive denominator toggle */
+        @media (max-width: 768px) {
+            .denominator-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body class="sidebar-mini layout-fixed" style="height: auto;">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link">Shariah Compliance Screening System</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-thumbs-up"></i>
+                        <span class="badge badge-warning navbar-badge">4</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="display: none;">
+                        <span class="dropdown-item dropdown-header">4 Approval(s)</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item"><i class="fas fa-lock mr-2"></i> 1 Permissions to approve</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item"><i class="fas fa-user-lock mr-2"></i> 2 Roles to approve</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item"><i class="fas fa-file mr-2"></i> 1 Evaluation Criterias to
+                            approve</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Approvals</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Sidebar -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a href="#" class="brand-link">
+                <img src="./Review Company - iScreening_files/logo_iscreening.png" alt="Logo" class="brand-image"
+                    style="opacity: .8">
+                <span class="brand-text font-weight-light">&nbsp;</span>
+            </a>
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <a class="float-right" href="#"><i class="fa fa-sign-out-alt"></i></a>
+                        <a href="javascript:void(0);" style="width:215px;" class="d-block">Mohamad Zahril Jumari
+                            <br>(Administrator)</a>
+                    </div>
+                </div>
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Supervisor</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Head of Department</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Compliance Officer</p>
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link"><i class="nav-icon fas fa-clipboard"></i>
+                                <p>Task <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Assignment</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Compliance Review</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Approve Compliance Review</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Generate Letter</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Appeals & KIV</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Queries</p>
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link"><i class="nav-icon fas fa-users"></i>
+                                <p>SAC <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Schedule SAC Meeting</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>SAC Decision</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>SAC Meeting Report</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>All Meetings</p>
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link"><i class="nav-icon fas fa-building"></i>
+                                <p>Company <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>List of Reviews</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>List of Companies</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Update Shariah Status</p>
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link"><i class="nav-icon fas fa-money-check"></i>
+                                <p>Payment <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Update Payment Information</p>
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link"><i class="nav-icon fas fa-hdd"></i>
+                                <p>Administration <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Manage Users</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Manage Companies</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>ESG List</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Evaluation Criteria</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Email Template</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Announcement</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Audit Trail</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Settings</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>SNC Activities</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Reports</p>
+                                    </a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">
+                                        <p>Access Rights Report</p>
+                                    </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper" style="min-height: 1191px;">
+            <div id="main-review-div" class="pgContent clearfix shariah">
+                <!-- Enhanced Action Bar with Shariah Standard Selector + AI Assistant -->
+                <div class="actioncontainer clearfix mrgnBottom"
+                    style="background: #f8fafc; padding: 12px 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <label for="ShariahStandard"
+                            style="font-weight: 700; margin: 0; font-family: 'Outfit', sans-serif; color: #34495e;">Compliance
+                            Benchmark Standard:</label>
+                        <select class="form-control" id="ShariahStandard" name="ShariahStandard"
+                            style="width: auto; display: inline-block; border-radius: 4px; padding: 4px 12px; font-weight: bold; color: #2c3e50; border: 1px solid #cbd5e1; height: auto;">
+                            <option value="SC_Malaysia">SC Malaysia (Local Standard)</option>
+                            <option value="OJK_Indonesia">OJK Indonesia (POJK 35)</option>
+                            <option value="MSCI_Islamic">MSCI Islamic Index Series</option>
+                            <option value="Dow_Jones">Dow Jones Islamic Market</option>
+                        </select>
+                        <!-- Benchmark quick info badge -->
+                        <span id="benchmark-badge" class="denominator-badge total-assets">Denominator: Total
+                            Assets</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <button type="button" class="btn btn-primary" id="open-ai-drawer"
+                            style="font-weight: 700; background: #3b82f6; border: none; padding: 8px 16px; border-radius: 6px; color: white; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(59,130,246,0.2);">
+                            <i class="fas fa-robot"></i> AI Shariah Assistant
+                        </button>
+                        <label class="btn btn-info" for="ai-json-file"
+                            style="margin: 0; padding: 8px 16px; border-radius: 6px; font-weight: 700;">
+                            <b class="fa fa-magic"></b><span id="aibutttontext"> AI Import JSON</span>
+                        </label>
+                        <input id="ai-json-file" type="file" accept="application/json,.json" style="display:none">
+                    </div>
+                </div>
+
+                <!-- ====== BENCHMARK LAYOUT CONFIGURATOR ====== -->
+                <div id="dynamic-layout-section">
+                    <!-- Benchmark Info Panel - contextual guidance -->
+                    <div id="benchmark-info-panel" class="benchmark-info-panel">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <h4 id="bmk-title" style="margin: 0;"><i class="fas fa-balance-scale"></i> SC Malaysia
+                                (Shariah Advisory Council) Standard</h4>
+                            <span id="bmk-source" style="font-size: 11px; color: #94a3b8;">Source: SC Malaysia
+                                Guidelines on Shariah-Compliant Securities</span>
+                        </div>
+                        <div id="bmk-description" style="margin-top: 8px; font-size: 12px; color: #64748b;">
+                            <p style="margin: 2px 0;">Financial ratios: Total Debt ≤ 33% of Total Assets, Cash ≤ 33% of
+                                Total Assets. Business activities: 5% benchmark for interest income & prohibited
+                                revenue, 20% benchmark for mixed activities.</p>
+                            <p style="margin: 2px 0;"><strong>Key Reference:</strong> SC Malaysia's SAC Shariah
+                                Screening Methodology - Bursa Malaysia</p>
+                        </div>
+
+                        <!-- Threshold Comparison Table for selected benchmark -->
+                        <div style="margin-top: 12px;">
+                            <table id="threshold-table" class="threshold-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ratio Parameter</th>
+                                        <th>Denominator</th>
+                                        <th>Entry Threshold (New)</th>
+                                        <th>Maintenance Threshold</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="threshold-tbody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Compound Action Buttons: Select Company from AI Drawer Link -->
+                    <div style="margin: 10px 0; display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="open-ai-selector"
+                            style="border: 1px solid #3b82f6; color: #3b82f6; background: white;">
+                            <i class="fas fa-file-import"></i> Load Regional Document from AI Drawer
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="reset-bmk-defaults"
+                            style="border: 1px solid #94a3b8; color: #64748b; background: white;">
+                            <i class="fas fa-undo"></i> Reset to Benchmark Defaults
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ====== MAIN REVIEW FORM ====== -->
+                <form id="review-form" action="#" method="post" onkeypress="return event.keyCode != 13;"
+                    onsubmit="return false;">
+                    <input id="Id" name="Id" type="hidden" value="47856">
+                    <input id="CompanyProfile_Id" name="CompanyProfile.Id" type="hidden" value="98144">
+                    <input id="FinancialRatio" name="FinancialRatio" type="hidden" value="33.00">
+                    <input id="Sector" name="Sector" type="hidden" value="CONSUMER PRODUCT">
+                    <input id="Mode" name="Mode" type="hidden" value="Compliance Officer">
+                    <input id="AccountsReceivables" name="AccountsReceivables" type="hidden" value="3500000">
+                    <input id="AvgMarketCap" name="AvgMarketCap" type="hidden" value="30000000">
+                    <input id="DateAssigned" name="DateAssigned" type="hidden" value="29/08/2022 00:00:00">
+                    <input id="DividendPercentage" name="DividendPercentage" type="hidden" value="0">
+                    <input id="InterestIncomePercentage" name="InterestIncomePercentage" type="hidden"
+                        value="0.0203740678863941974654659500">
+
+                    <!-- Action Buttons Row -->
+                    <div class="actioncontainer clearfix mrgnBottom">
+                        <div class="pull-right marginLeft">
+                            <a class="addbtn" href="#"><b class="fa fa-eye"></b><span>View Annual Report</span></a>
+                        </div>
+                        <div class="pull-right marginLeft">
+                            <div class="addbtn fileinput-button" data-toggle="tooltip" data-placement="bottom" title=""
+                                style="position: relative; overflow: hidden; direction: ltr;"
+                                data-original-title="Upload Documents">
+                                <span class="hidden spinner"><span
+                                        class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span></span>
+                                <b class="fa fa-upload"></b><span>Upload Documents</span>
+                                <input multiple="" class="upload-file" type="file" name="files[]" data-id="47856"
+                                    data-url="/Screening/ReUploadAnnualReport?ReviewId=47856">
+                            </div>
+                        </div>
+                        <div class="pull-right marginLeft">
+                            <a class="addbtn" href="#" onclick="showReassign()"><b class="fa fa-user"></b><span>Change
+                                    OIC</span></a>
+                        </div>
+                    </div>
+
+                    <!-- Company Profile -->
+                    <div class="col-lg-12">
+                        <div class="graphcontainer">
+                            <h2>Company Profile</h2>
+                            <div class="actioncontainer clearfix mrgnBottom">
+                                <div class="pull-right mrgnLft">
+                                    <a class="addbtn" href="#"><b class="fa fa-edit"></b><span>Edit Profile</span></a>
+                                </div>
+                            </div>
+                            <div class="graph clearfix review-container">
+                                <div class="row">
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Company Name:</b> <span
+                                            class="fltLft mrgnLft">Nova Wellness Group Bhd</span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">SAC Meeting Number:</b> <span
+                                            class="fltLft mrgnLft">211</span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Listing Status:</b> <span
+                                            class="fltLft mrgnLft">IPO</span></span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Registration Number:</b> <span
+                                            class="fltLft mrgnLft">1196094-M</span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">SAC Meeting Date:</b> <span
+                                            class="fltLft mrgnLft">29 Aug 2022</span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Previous Status:</b> <span
+                                            class="fltLft mrgnLft"></span></span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">File Number:</b> <span
+                                            class="fltLft mrgnLft"></span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Market:</b> <span
+                                            class="fltLft mrgnLft">ACE Market</span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Compliance Officer:</b> <span
+                                            class="fltLft mrgnLft">Mohamad Zahril Jumari</span></span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Sector:</b> <span
+                                            class="fltLft mrgnLft">CONSUMER PRODUCT</span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Financial Year End:</b> <span
+                                            class="fltLft mrgnLft">30 Jun 2017 [2023] </span></span>
+                                    <span class="col-sm-4"><b class="fltLft col-sm-4">Announcement Date:</b> <span
+                                            class="fltLft mrgnLft">30 Nov 2018</span></span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-12">
+                                        <b class="fltLft col-sm-4" style="width:10.95%">Principal Activities:</b>
+                                        <span class="fltLft">
+                                            <ul>
+                                                <li>Development, production and sales of nutraceutical products which
+                                                    includes dietary supplements and functional foods products, and
+                                                    skincare products under House Brand.</li>
+                                                <li>OEM development and production of nutraceutical products which
+                                                    includes dietary supplements and functional foods products for the
+                                                    OEM customers under their brand.</li>
+                                                <li>Animal health: development and production of animal health products,
+                                                    to threat and prevent diseases for animals.</li>
+                                            </ul>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ====== FINANCIAL PARAMETERS ====== -->
+                    <div class="col-lg-12">
+                        <div class="graphcontainer">
+                            <h2>Financial Parameters <span id="bmk-denominator-hint"
+                                    style="font-size: 12px; font-weight: normal; color: #64748b;">(Benchmark: Total
+                                    Assets)</span></h2>
+                            <div class="graph clearfix review-container">
+                                <!-- Gross Revenue -->
+                                <div class="row-fluid">
+                                    <div class="col-sm-4 fltLft">
+                                        <label class="label-required" for="GrossRevenue">Group revenue or turnover<span
+                                                class="required">*</span></label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="GrossRevenue"
+                                                style="display: inline-block; text-align: right;"><input
+                                                name="GrossRevenue" type="hidden" value="24541000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Gross Profit/Loss -->
+                                <div class="row-fluid">
+                                    <div class="col-sm-4 fltLft">
+                                        <label class="label-required" for="GrossProfitLoss">Group profit before tax<span
+                                                class="required">*</span></label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="GrossProfitLoss"
+                                                style="display: inline-block; text-align: right;"><input
+                                                name="GrossProfitLoss" type="hidden" value="13610000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Total Assets -->
+                                <div class="row-fluid">
+                                    <div class="col-sm-4 fltLft">
+                                        <label class="label-required" for="TotalAsset">Total Assets <span
+                                                id="ta-denominator-badge"
+                                                class="denominator-badge total-assets">Denominator</span><span
+                                                class="required">*</span></label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="TotalAsset" style="display: inline-block; text-align: right;"><input
+                                                name="TotalAsset" type="hidden" value="26331000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [Dynamic] Accounts Receivables - visible for MSCI & Dow Jones -->
+                                <div id="field-receivables" class="row-fluid benchmark-section"
+                                    style="margin: 15px 0; overflow: hidden;">
+                                    <div class="col-sm-4 fltLft">
+                                        <label for="AccountsReceivablesDisp">Accounts Receivables <span
+                                                id="rec-denominator-badge" class="denominator-badge"
+                                                style="display: none;">Required</label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input type="text" class="form-control" id="AccountsReceivablesDisp"
+                                                value="3,500,000.00" style="text-align: right;">
+                                            <input type="hidden" id="AccountsReceivablesHidden" value="3500000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [Dynamic] Average Market Cap - visible for Dow Jones only -->
+                                <div id="field-marketcap" class="row-fluid benchmark-section"
+                                    style="margin: 15px 0; overflow: hidden;">
+                                    <div class="col-sm-4 fltLft">
+                                        <label for="AvgMarketCapDisp">Average Market Cap (24-Month Trailing) <span
+                                                id="mcap-denominator-badge"
+                                                class="denominator-badge market-cap">Denominator</span></label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input type="text" class="form-control" id="AvgMarketCapDisp"
+                                                value="30,000,000.00" style="text-align: right;">
+                                            <input type="hidden" id="AvgMarketCapHidden" value="30000000">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ====== FINANCIAL RATIOS ====== -->
+                    <div class="pagebreak"></div>
+                    <div class="col-lg-12">
+                        <div class="graphcontainer">
+                            <h2>Financial Ratios <span id="bmk-ratio-hint"
+                                    style="font-size: 12px; font-weight: normal; color: #64748b;">(SC Malaysia Standard
+                                    - Total Assets Denominator)</span></h2>
+                            <div class="graph clearfix review-container">
+                                <!-- Cash section -->
+                                <div class="row-fluid">
+                                    <div class="col-sm-4 fltLft">
+                                        <label for="TotalCash">Total Cash:</label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <span class="form-control currencyFormat"
+                                                id="total-net-cash">2,058,000.00</span>
+                                            <span class="input-group-addon percentage">(7.82%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="cash-container">
+                                    <div class="row-fluid">
+                                        <div class="col-sm-4 fltLft">
+                                            <label class="fltRgt">Cash and bank balances</label>
+                                            <input class="other-cash-type" name="CashAndDebts[0].Id" value="26455"
+                                                type="hidden">
+                                            <input class="other-cash-type" name="CashAndDebts[0].AppSettingId"
+                                                value="26" type="hidden">
+                                            <input class="other-cash-type" name="CashAndDebts[0].SettingName"
+                                                value="Cash and bank balances" type="hidden">
+                                        </div>
+                                        <div class="col-sm-6 fltLft marginLeft">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">RM</span>
+                                                <input
+                                                    class="ui-igedit-field form-control other-cash ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                    id="CashAndDebts[0].Amount"
+                                                    style="display: inline-block; text-align: right;"><input
+                                                    name="CashAndDebts[0].Amount" type="hidden" value="2058000">
+                                                <input name="CashAndDebts[0].TypeName" value="Cash" type="hidden">
+                                                <span class="input-group-addon percentage">(7.82%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 fltLft marginLeft">
+                                            <a class="btn btn-md btn-warning" onclick="removeRow('Cash',this)"><span
+                                                    class="fa fa-lg fa-minus"></span> Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid addcash">
+                                    <div class="col-sm-4 fltLft">
+                                        <select class="form-control" id="OtherCashType" name="OtherCashType">
+                                            <option value="0">Select Cash Type</option>
+                                            <option value="26">Cash and bank balances</option>
+                                            <option value="27">Cash at bank</option>
+                                            <option value="51">Deposits with licensed bank</option>
+                                            <option value="115">Short term deposits</option>
+                                            <option value="70">Money market instrument</option>
+                                            <option value="69">Short term investment</option>
+                                            <option value="132">Unit trust funds</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group enterpoint">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control other-cash-input ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="OtherCash" style="display: inline-block; text-align: right;"><input
+                                                name="OtherCash" type="hidden" value="0">
+                                            <span class="input-group-addon percentage">(0.00 %)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 fltLft marginLeft">
+                                        <a id="addOtherCash" class="btn btn-md btn-success fltLft"><span
+                                                class="fa fa-lg fa-plus"></span> Add</a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- Debt section -->
+                                <div class="row-fluid mrgnTop">
+                                    <div class="col-sm-4 fltLft">
+                                        <label for="TotalDebt">Total Debt:</label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <span class="form-control currencyFormat" id="total-net-debt">0.00</span>
+                                            <span class="input-group-addon percentage">(0.00%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="debt-container"></div>
+                                <div class="row-fluid adddebt">
+                                    <div class="col-sm-4 fltLft">
+                                        <select class="form-control" id="OtherDebtType" name="OtherDebtType">
+                                            <option value="0">Select Debt Type</option>
+                                            <option value="28">Current: Term loans</option>
+                                            <option value="72">Current: Revolving loans</option>
+                                            <option value="73">Current: Revolving credit</option>
+                                            <option value="76">Current: Conventional bonds</option>
+                                            <option value="99">Current: Loans and borrowings</option>
+                                            <option value="108">Non-current: Term loans</option>
+                                            <option value="110">Non-current: Loans and borrowings</option>
+                                            <option value="114">Non-current: Bank borrowings</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group enterpoint">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control other-debt-input ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="OtherDebt" style="display: inline-block; text-align: right;"><input
+                                                name="OtherDebt" type="hidden" value="0">
+                                            <span class="input-group-addon percentage">(0.00 %)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 fltLft marginLeft">
+                                        <a id="addOtherDebt" class="btn btn-md btn-success fltLft"><span
+                                                class="fa fa-lg fa-plus"></span> Add</a>
+                                    </div>
+                                </div>
+
+                                <!-- [Dynamic] Receivables Ratio Summary - shown for MSCI & Dow Jones -->
+                                <div id="ratio-receivables-summary" class="benchmark-section" style="margin-top: 15px;">
+                                    <div class="row-fluid">
+                                        <div class="col-sm-4 fltLft">
+                                            <label>Accounts Receivables:</label>
+                                        </div>
+                                        <div class="col-sm-6 fltLft marginLeft">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">RM</span>
+                                                <span class="form-control currencyFormat"
+                                                    id="display-receivables">3,500,000.00</span>
+                                                <span class="input-group-addon percentage"
+                                                    id="display-receivables-pct">(0.00%)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [Dynamic] Market Cap Ratio Summary - shown for Dow Jones -->
+                                <div id="ratio-marketcap-summary" class="benchmark-section" style="margin-top: 15px;">
+                                    <div class="row-fluid">
+                                        <div class="col-sm-4 fltLft">
+                                            <label>Average Market Cap:</label>
+                                        </div>
+                                        <div class="col-sm-6 fltLft marginLeft">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">RM</span>
+                                                <span class="form-control currencyFormat"
+                                                    id="display-marketcap">30,000,000.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- [Dynamic] Ratio thresholds contextual legend -->
+                                <div id="ratio-legend" class="benchmark-info-panel" style="margin-top: 15px;">
+                                    <h4 style="font-size: 12px; color: #64748b;">
+                                        <i class="fas fa-info-circle"></i> Current Benchmark Thresholds
+                                    </h4>
+                                    <div id="ratio-legend-content" style="font-size: 11px; color: #475569;">
+                                        <!-- Populated by JS based on benchmark -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ====== INTEREST INCOME/DIVIDEND ====== -->
+                    <div class="col-lg-12">
+                        <div class="graphcontainer">
+                            <h2>Interest Income / Dividend</h2>
+                            <div class="graph clearfix review-container">
+                                <div class="row-fluid">
+                                    <div class="col-sm-4 fltLft">
+                                        <label for="InterestIncome">Interest Income</label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="InterestIncome"
+                                                style="display: inline-block; text-align: right;"><input
+                                                name="InterestIncome" type="hidden" value="5000">
+                                            <span class="input-group-addon percentage">(0.02%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="col-sm-4 fltLft">
+                                        <label for="Dividend">Dividend</label>
+                                    </div>
+                                    <div class="col-sm-6 fltLft marginLeft">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="Dividend" style="display: inline-block; text-align: right;"><input
+                                                name="Dividend" type="hidden" value="0">
+                                            <span class="input-group-addon percentage">(0.00%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ====== SHARIAH NON-COMPLIANT ACTIVITIES ====== -->
+                    <div class="pagebreak"></div>
+                    <div class="col-lg-12">
+                        <div class="graphcontainer">
+                            <h2>Shariah Non-Compliant Activities <span id="bmk-activity-hint"
+                                    style="font-size: 12px; font-weight: normal; color: #64748b;">(SC Malaysia: 5% & 20%
+                                    Benchmark)</span></h2>
+                            <div class="graph clearfix review-container">
+                                <!-- Activity input row -->
+                                <div class="row-fluid add-activity">
+                                    <div class="col-sm-4 fltLft">
+                                        <label for="ActivityList">&nbsp;</label>
+                                        <select class="form-control" id="ActivityList" name="ActivityList">
+                                            <option>Choose Activity</option>
+                                            <optgroup label="Not applicable (20% Benchmark - Hotel)"
+                                                text="Not applicable (20% Benchmark - Hotel)" value="20.00">
+                                                <option value="28">Hotel & Resort</option>
+                                            </optgroup>
+                                            <optgroup label="5% Benchmark" text="5% Benchmark" value="5.00">
+                                                <option value="79">Advertisement _ Liquor and Gaming</option>
+                                                <option value="82">Banking & Finance</option>
+                                                <option value="83">Liquor Related Products</option>
+                                                <option value="88">Shariah Non-compliant Dividends</option>
+                                                <option value="89">Gambling & Gaming</option>
+                                                <option value="92">Insurance services</option>
+                                                <option value="94">Interest Income</option>
+                                                <option value="96">Liquor/Alcohol/Non halal food/Pork</option>
+                                                <option value="98">Musical Business</option>
+                                                <option value="99">Selling Non-Halal Product</option>
+                                                <option value="100">Investment in Shariah Non-compliant Securities
+                                                </option>
+                                                <option value="101">Non Halal Food</option>
+                                                <option value="105">Pork Related Business</option>
+                                                <option value="108">Tobacco</option>
+                                                <option value="111">Others</option>
+                                            </optgroup>
+                                            <optgroup label="20% Benchmark" text="20% Benchmark" value="20.00">
+                                                <option value="84">Stockbroking Business</option>
+                                                <option value="106">Rental Received From Non Halal Activity</option>
+                                                <option value="107">Share Trading</option>
+                                                <option value="110">Leisure & Entertainment</option>
+                                                <option value="112">Movie Cinema</option>
+                                                <option value="24011">Others</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 fltLft marginLeft">
+                                        <label for="Revenue">Revenue</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control revenue-input ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="Revenue" style="display: inline-block; text-align: right;"><input
+                                                name="Revenue" type="hidden" value="0">
+                                            <span class="input-group-addon percentage">(0.00 %)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 fltLft marginLeft">
+                                        <label for="PBT">PBT</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input
+                                                class="ui-igedit-field form-control pbt-input disable-on-negative ui-igedit ui-state-default ui-widget ui-corner-all"
+                                                id="PBT" style="display: inline-block; text-align: right;"><input
+                                                name="PBT" type="hidden" value="0">
+                                            <span class="input-group-addon percentage">(0.00 %)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 fltLft marginLeft">
+                                        <button type="button" class="btn btn-md btn-success" id="addNonShariah"
+                                            style="margin-top: 24px;"><i class="fa fa-lg fa-plus"></i> Add</button>
+                                    </div>
+                                </div>
+                                <!-- Activity list container -->
+                                <div id="shariah-non-compliant-container"></div>
+                                <!-- Activity summary -->
+                                <div class="row-fluid mrgnTop consolidated-total" data-qastatus="ShariahCompliant">
+                                    <div class="col-sm-12 fltLft mrgnTop">
+                                        <div class="row-fluid mrgnTop">
+                                            <h2>Total contribution of Shariah Non-compliant activities:</h2>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="col-sm-4 fltLft">&nbsp;</div>
+                                            <div class="col-sm-3 fltLft mrgnLft"><label>Revenue</label></div>
+                                            <div class="col-sm-3 fltLft mrgnLft"><label>PBT</label></div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="col-sm-4 fltLft">5% Benchmark:</div>
+                                            <div class="col-sm-3 fltLft mrgnLft">
+                                                <span class="percent5val1 currencyFormat">5,000.00</span>
+                                                <span class="percentage">(0.02%)</span>
+                                            </div>
+                                            <div class="col-sm-3 fltLft mrgnLft">
+                                                <span class="percent5val2 currencyFormat">0.00</span>
+                                                <span class="percentage">(0.00%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="col-sm-offset-1 col-sm-3 fltLft">Interest Income:</div>
+                                            <div class="col-sm-3 fltLft mrgnLft">
+                                                <span class="percent5val1 currencyFormat">5,000.00</span>
+                                                <span class="percentage">(0.02%)</span>
+                                            </div>
+                                            <div class="col-sm-3 fltLft mrgnLft">
+                                                <span class="percent5val2 currencyFormat">0.00</span>
+                                                <span class="percentage">(0.00%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="col-sm-offset-1 col-sm-3 fltLft">Dividend:</div>
+                                            <div class="col-sm-3 fltLft mrgnLft">
+                                                <span class="percent5val1 currencyFormat">0.00</span>
+                                                <span class="percentage">(0.00%)</span>
+                                            </div>
+                                            <div class="col-sm-3 fltLft mrgnLft">
+                                                <span class="percent5val2 currencyFormat">0.00</span>
+                                                <span class="percentage">(0.00%)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QA Status -->
+                    <div class="pagebreak"></div>
+                    <div class="col-lg-12">
+                        <div class="actioncontainer clearfix mrgnBottom mrgnTop">
+                            <div class="pull-right marginLeft qastatus-wrapper shariah" id="qaStatusData">
+                                <span>Quantitative Result: </span><span id="qastatus">Shariah-Compliant</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Remarks & Notes -->
+                    <div class="col-lg-12">
+                        <div class="graphcontainer">
+                            <h2>Remarks & Notes</h2>
+                            <div class="graph clearfix review-container">
+                                <div style="overflow:auto;">
+                                    <div class="col-sm-12 fltLft">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th width="15%">Remark Date</th>
+                                                    <th width="20%">Remark By</th>
+                                                    <th width="50%">Comments</th>
+                                                    <th width="15%">File Status</th>
+                                                    <th width="15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="even" data-id="12453">
+                                                    <td>17 Apr 2020</td>
+                                                    <td>Mohamad Zahril Jumari</td>
+                                                    <td>
+                                                        <div style="word-wrap:break-word">aloo yes sir</div>
+                                                    </td>
+                                                    <td width="50%">Under-Screening</td>
+                                                    <td><a class="action_icons" data-toggle="tooltip"
+                                                            data-placement="top" title="" onclick="DeleteRemark(12453)"
+                                                            data-original-title="Delete"><img
+                                                                src="./Review Company - iScreening_files/action_ico_bin.png"></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 notebox">
+                        <label for="AdditionNotes">Additional Notes</label>
+                        <textarea name="AdditionNotes" id="AdditionNotes" class="form-control"
+                            style="height: 100px;"></textarea>
+                    </div>
+
+                    <!-- Submit buttons -->
+                    <div class="form-group fltRgt marginLeft mrgnTop">
+                        <button type="submit" id="submit-to-supervisor" class="btn btn-warning mrgnTop"
+                            onclick="DoSubmit();" name="Command" value="Submit to Supervisor">Submit to
+                            Supervisor</button>
+                    </div>
+                    <div class="form-group fltRgt marginTop">
+                        <button type="submit" id="save-data" class="btn btn-warning mrgnTop" onclick="DoSubmit();"
+                            name="Command" value="Save">Save</button>
+                    </div>
+                    <div class="form-group fltRgt marginRight mrgnTop">
+                        <a class="btn btn-primary mrgnTop" target="_blank" href="#"><b
+                                class="fa fa-print marginRight"></b><span>Print</span></a>
+                    </div>
+                </form>
+            </div>
+
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-block"><b>Version</b> 3.1.0 (AI Enhanced Demo)</div>
+                <strong>Copyright &copy; 2021 <a href="#">Securities Commission Malaysia</a>.</strong> All rights
+                reserved.
+            </footer>
+        </div>
+
+        <!-- ====== AI DRAWER ====== -->
+        <div id="ai-drawer" class="ai-drawer-closed">
+            <div class="ai-drawer-header">
+                <h3><i class="fa fa-robot"></i> Shariah Compliance AI Agent</h3>
+                <button type="button" id="close-ai-drawer" class="close-btn">&times;</button>
+            </div>
+            <div class="ai-drawer-body">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="ai-company-select"
+                        style="font-weight: 700; color: #4a5568; display: block; margin-bottom: 8px;">Select Regional
+                        Document/Prospectus:</label>
+                    <select class="form-control" id="ai-company-select" style="width: 100%;">
+                        <option value="">-- Choose Company Document --</option>
+                        <option value="nova">Nova Wellness (Malaysia) - Malay/English</option>
+                        <option value="indofood">PT Indofood CBP (Indonesia) - Bahasa Indonesia</option>
+                        <option value="siamfood">Siam Food Products (Thailand) - Thai (ภาษาไทย)</option>
+                        <option value="vinamilk">Vietnam Dairy (Vietnam) - Vietnamese (Tiếng Việt)</option>
+                    </select>
+                </div>
+                <div id="ai-processing-section" style="display: none;">
+                    <h4
+                        style="color: #3b82f6; margin: 0 0 10px 0; font-size: 16px; font-weight: 700; text-align: center;">
+                        <i class="fas fa-spinner fa-spin"></i> Processing Regional Document</h4>
+                    <div class="ai-progress-container">
+                        <div id="ai-progress-bar" class="ai-progress-bar" style="width: 0%;"></div>
+                    </div>
+                    <div id="ai-status-step"
+                        style="font-style: italic; color: #64748b; font-size: 12px; text-align: center;">Initializing
+                        Shariah Agent...</div>
+                </div>
+                <div id="ai-results-section" style="display: none; margin-top: 20px;">
+                    <div class="ai-alert-info"><i class="fas fa-check-circle"></i> AI Analysis & Data Extraction
+                        Complete</div>
+                    <div class="card"
+                        style="border: 1px solid #e2e8f0; border-radius: 8px; background: white; padding: 15px; margin-bottom: 20px;">
+                        <h4
+                            style="margin: 0 0 10px 0; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; font-size: 14px; font-weight: 700;">
+                            Company Details</h4>
+                        <div style="font-size: 13px; line-height: 1.6; color: #475569;">
+                            <div style="display: flex; justify-content: space-between;"><strong>Company Name:</strong>
+                                <span id="res-name"></span></div>
+                            <div style="display: flex; justify-content: space-between;"><strong>Country:</strong> <span
+                                    id="res-country"></span></div>
+                            <div style="display: flex; justify-content: space-between;"><strong>Language:</strong> <span
+                                    id="res-lang"></span></div>
+                            <div style="display: flex; justify-content: space-between;"><strong>Reg Number:</strong>
+                                <span id="res-reg"></span></div>
+                            <div style="display: flex; justify-content: space-between;"><strong>Financial Year
+                                    End:</strong> <span id="res-fye"></span></div>
+                            <div style="display: flex; justify-content: space-between;"><strong>Sector:</strong> <span
+                                    id="res-sector"></span></div>
+                        </div>
+                    </div>
+                    <h4 style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0 0 10px 0;">Regional Language
+                        Translation</h4>
+                    <div id="ai-snippets-container" style="margin-bottom: 20px;"></div>
+                    <h4 style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0 0 10px 0;">Extracted
+                        Financial Values (Converted to RM)</h4>
+                    <table class="table table-bordered" style="font-size: 12px; background: white; width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td>Gross Revenue</td>
+                                <td id="val-revenue" style="text-align: right; font-weight: 700;"></td>
+                            </tr>
+                            <tr>
+                                <td>Profit Before Tax</td>
+                                <td id="val-pbt" style="text-align: right; font-weight: 700;"></td>
+                            </tr>
+                            <tr>
+                                <td>Total Assets</td>
+                                <td id="val-assets" style="text-align: right; font-weight: 700;"></td>
+                            </tr>
+                            <tr>
+                                <td>Interest Income</td>
+                                <td id="val-interest" style="text-align: right; font-weight: 700;"></td>
+                            </tr>
+                            <tr>
+                                <td>Accounts Receivables</td>
+                                <td id="val-receivables" style="text-align: right; font-weight: 700;"></td>
+                            </tr>
+                            <tr>
+                                <td>Average Market Cap</td>
+                                <td id="val-mcap" style="text-align: right; font-weight: 700;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="ai-btn-success" id="ai-apply-btn"><i class="fa fa-magic"></i>
+                        Auto-populate iScreening System</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./Review Company - iScreening_files/bootstrap.bundle.min.js.download"></script>
+    <script type="text/javascript"
+        src="./Review Company - iScreening_files/bootstrap-hover-dropdown.min.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/bootstrap-datepicker.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/bootbox.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/summernote.min.js.download"></script>
+    <script type="text/javascript"
+        src="./Review Company - iScreening_files/jquery.fineuploader-4.2.2.min.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/custom-plugins.js.download"></script>
+    <script type="text/javascript" src="./Review Company - iScreening_files/custom.js.download"></script>
+    <script src="./Review Company - iScreening_files/jquery.overlayScrollbars.min.js.download"></script>
+    <script src="./Review Company - iScreening_files/adminlte.min.js.download"></script>
+    <script src="./Review Company - iScreening_files/MainSite.js.download"></script>
+    <script src="./Review Company - iScreening_files/knockout.mapping-latest.js.download"></script>
+    <script src="./Review Company - iScreening_files/MicrosoftAjax.js.download" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        // ============================================
+        // BENCHMARK LAYOUT MANAGER
+        // ============================================
+        // This controls dynamic layout changes based on selected benchmark standard.
+        // Each benchmark requires different fields, labels, thresholds and compliance rules.
+
+        var BENCHMARK_CONFIG = {
+            SC_Malaysia: {
+                title: 'SC Malaysia (Shariah Advisory Council) Standard',
+                source: 'Source: SC Malaysia Guidelines on Shariah-Compliant Securities',
+                description: 'Financial ratios based on Total Assets. Business activities evaluated under 5% and 20% benchmark thresholds as per SC Malaysia Shariah Screening Methodology.',
+                denominator: 'Total Assets',
+                denominatorBadge: 'total-assets',
+                reference: 'SC Malaysia\'s SAC Shariah Screening Methodology - Bursa Malaysia',
+                // Fields to show/hide
+                showReceivables: false,
+                showMarketCap: false,
+                showReceivablesRatio: false,
+                showMarketCapRatio: false,
+                // Denominator for ratio legends
+                ratioDenominator: 'Total Assets',
+                // Thresholds [entry, maintenance]
+                thresholds: [
+                    { name: 'Cash / Total Assets', entry: '30%', maint: '33%' },
+                    { name: 'Interest-Bearing Debt / Total Assets', entry: '30%', maint: '33%' },
+                    { name: 'Interest Income / Revenue (5% Benchmark)', entry: '5%', maint: '5%' },
+                    { name: 'Non-Compliant Revenue (20% Benchmark)', entry: '20%', maint: '20%' }
+                ],
+                activityLabel: 'SC Malaysia: 5% & 20% Benchmark',
+                activityNote: 'Activities classified under 5% (interest, prohibited revenue) and 20% (mixed activities) benchmarks per SC Malaysia guidelines.'
+            },
+            OJK_Indonesia: {
+                title: 'OJK Indonesia (POJK 35/2017) Standard',
+                source: 'Source: OJK Regulation No. 35 /POJK.04/2017',
+                description: 'Based on OJK POJK 35/2017 criteria for Shariah Securities List (DES). Uses debt-to-assets ratio ≤ 45% and total non-halal income ≤ 10% of total revenue including interest.',
+                denominator: 'Total Assets',
+                denominatorBadge: 'total-assets',
+                reference: 'OJK POJK 35/2017 - Criteria and Issuance of Shariah Securities List',
+                showReceivables: false,
+                showMarketCap: false,
+                showReceivablesRatio: false,
+                showMarketCapRatio: false,
+                ratioDenominator: 'Total Assets',
+                thresholds: [
+                    { name: 'Total Interest-Bearing Debt / Total Assets', entry: '45%', maint: '45%' },
+                    { name: 'Non-Halal Income / (Revenue + Interest Income)', entry: '10%', maint: '10%' }
+                ],
+                activityLabel: 'OJK Indonesia: Non-Halal Revenue Streams (10% Tolerated)',
+                activityNote: 'Non-halal income includes interest income and any revenue from prohibited activities. Combined total must not exceed 10% of total revenue including interest income.'
+            },
+            MSCI_Islamic: {
+                title: 'MSCI Islamic Index Series Standard',
+                source: 'Source: MSCI Islamic Index Series Methodology (Dec 2025)',
+                description: 'MSCI uses Total Assets as denominator with 33.33% debt, 33.33% cash, and 70% (receivables + cash) thresholds. 5% revenue screen for prohibited business activities. Includes exit buffers for existing constituents.',
+                denominator: 'Total Assets',
+                denominatorBadge: 'total-assets',
+                reference: 'MSCI Islamic Index Series Methodology v2.0 - MSCI.com',
+                showReceivables: true,
+                showMarketCap: false,
+                showReceivablesRatio: true,
+                showMarketCapRatio: false,
+                ratioDenominator: 'Total Assets',
+                thresholds: [
+                    { name: 'Total Debt / Total Assets', entry: '30%', maint: '33.33%' },
+                    { name: 'Cash + Interest Securities / Total Assets', entry: '30%', maint: '33.33%' },
+                    { name: '(Accounts Receivables + Cash) / Total Assets', entry: '46%', maint: '70%' }
+                ],
+                activityLabel: 'MSCI: 5% Business Activity Screening',
+                activityNote: 'MSCI excludes companies with >5% revenue from prohibited activities (alcohol, tobacco, pork, conventional finance, weapons, gambling, music, hotels, cinema, adult entertainment).'
+            },
+            Dow_Jones: {
+                title: 'Dow Jones Islamic Market Standard',
+                source: 'Source: Dow Jones Islamic Market Indices Methodology (Feb 2026)',
+                description: 'Dow Jones uses Average Market Capitalization (24-month trailing) as denominator with <33% thresholds for debt, cash+securities, and receivables. Business activity screening with <5% non-compliant revenue.',
+                denominator: 'Avg Market Cap (24-month)',
+                denominatorBadge: 'market-cap',
+                reference: 'S&P DJI Dow Jones Islamic Market Indices Methodology',
+                showReceivables: true,
+                showMarketCap: true,
+                showReceivablesRatio: true,
+                showMarketCapRatio: true,
+                ratioDenominator: 'Average Market Cap (24-Month)',
+                thresholds: [
+                    { name: 'Total Interest-Bearing Debt / Avg Market Cap', entry: '<33%', maint: '<33%' },
+                    { name: 'Cash + Interest Securities / Avg Market Cap', entry: '<33%', maint: '<33%' },
+                    { name: 'Accounts Receivables / Avg Market Cap', entry: '<33%', maint: '<33%' }
+                ],
+                activityLabel: 'Dow Jones: Sector & Accounting Screens',
+                activityNote: 'Dow Jones screens by sectors (alcohol, tobacco, cannabis, pork, conventional finance, weapons, gambling, adult entertainment) with <5% revenue tolerance. Leverage compliance uses debt/market cap ratio.'
+            }
+        };
+
+        var currentBenchmark = 'SC_Malaysia';
+
+        function applyBenchmarkLayout(standard) {
+            var config = BENCHMARK_CONFIG[standard];
+            if (!config) return;
+
+            currentBenchmark = standard;
+
+            // 1. Update info panel
+            document.getElementById('bmk-title').innerHTML = '<i class="fas fa-balance-scale"></i> ' + config.title;
+            document.getElementById('bmk-source').textContent = config.source;
+            document.getElementById('bmk-description').innerHTML =
+                '<p style="margin: 2px 0;">' + config.description + '</p>' +
+                '<p style="margin: 2px 0;"><strong>Key Reference:</strong> ' + config.reference + '</p>';
+
+            // 2. Update denominator badge in header
+            var badge = document.getElementById('benchmark-badge');
+            badge.textContent = 'Denominator: ' + config.denominator;
+            badge.className = 'denominator-badge ' + config.denominatorBadge;
+
+            // 3. Update denominator hints in Financial Parameters
+            document.getElementById('bmk-denominator-hint').textContent = '(Benchmark: ' + config.denominator + ')';
+            document.getElementById('bmk-ratio-hint').textContent = '(' + config.title + ' - ' + config.denominator + ' Denominator)';
+            document.getElementById('bmk-activity-hint').textContent = '(' + config.activityLabel + ')';
+
+            // 4. Show/hide dynamic fields
+            // Receivables field
+            var recField = document.getElementById('field-receivables');
+            if (config.showReceivables) {
+                recField.style.display = 'block';
+                var recBadge = document.getElementById('rec-denominator-badge');
+                recBadge.textContent = (standard === 'Dow_Jones') ? 'Ratio Input' : 'Ratio Input';
+                recBadge.style.display = 'inline-block';
+                recBadge.className = 'denominator-badge ' + (standard === 'Dow_Jones' ? 'market-cap' : 'total-assets');
+            } else {
+                recField.style.display = 'none';
+            }
+
+            // Market Cap field
+            var mcapField = document.getElementById('field-marketcap');
+            if (config.showMarketCap) {
+                mcapField.style.display = 'block';
+            } else {
+                mcapField.style.display = 'none';
+            }
+
+            // Total Assets denominator badge update
+            var taBadge = document.getElementById('ta-denominator-badge');
+            if (standard === 'Dow_Jones') {
+                taBadge.style.display = 'none'; // Not the primary denominator for Dow Jones
+            } else {
+                taBadge.style.display = 'inline-block';
+                taBadge.textContent = 'Denominator';
+            }
+
+            // Market cap denominator badge
+            var mcapDenomBadge = document.getElementById('mcap-denominator-badge');
+            if (standard === 'Dow_Jones') {
+                mcapDenomBadge.textContent = 'Primary Denominator';
+            } else {
+                mcapDenomBadge.textContent = 'Denominator';
+            }
+
+            // 5. Update ratio summary sections
+            var recRatioSummary = document.getElementById('ratio-receivables-summary');
+            var mcapRatioSummary = document.getElementById('ratio-marketcap-summary');
+            recRatioSummary.style.display = config.showReceivablesRatio ? 'block' : 'none';
+            mcapRatioSummary.style.display = config.showMarketCapRatio ? 'block' : 'none';
+
+            // Update ratio summary values
+            var recVal = parseFloat(document.getElementById('AccountsReceivablesHidden').value) || 0;
+            document.getElementById('display-receivables').textContent = Number(recVal).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var ta = parseFloat($('#TotalAsset').igNumericEditor ? tryGetEditor('TotalAsset') : document.querySelector('input[name="TotalAsset"]').value) || 26331000;
+            var recPct = ta > 0 ? (recVal / ta) * 100 : 0;
+            document.getElementById('display-receivables-pct').textContent = '(' + recPct.toFixed(2) + '%)';
+
+            var mcapVal = parseFloat(document.getElementById('AvgMarketCapHidden').value) || 30000000;
+            document.getElementById('display-marketcap').textContent = Number(mcapVal).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // 6. Update thresholds table
+            var tbody = document.getElementById('threshold-tbody');
+            tbody.innerHTML = '';
+            config.thresholds.forEach(function (t) {
+                var row = document.createElement('tr');
+                row.className = 'current-benchmark';
+                row.innerHTML = '<td>' + t.name + '</td><td>' + config.denominator + '</td><td>' + t.entry + '</td><td>' + t.maint + '</td>';
+                tbody.appendChild(row);
+            });
+
+            // 7. Update ratio legend
+            var legendContent = document.getElementById('ratio-legend-content');
+            var legendHTML = '<table style="width:100%;"><thead><tr style="border-bottom:1px solid #e2e8f0;">' +
+                '<th style="text-align:left;padding:4px 6px;font-size:11px;color:#64748b;">Ratio</th>' +
+                '<th style="text-align:right;padding:4px 6px;font-size:11px;color:#64748b;">Threshold</th>' +
+                '<th style="text-align:right;padding:4px 6px;font-size:11px;color:#64748b;">Denominator</th>' +
+                '</tr></thead><tbody>';
+            config.thresholds.forEach(function (t) {
+                legendHTML += '<tr><td style="padding:3px 6px;font-size:11px;">' + t.name + '</td>' +
+                    '<td style="text-align:right;padding:3px 6px;font-size:11px;font-weight:600;">' + t.maint + '</td>' +
+                    '<td style="text-align:right;padding:3px 6px;font-size:11px;color:#64748b;">' + config.denominator + '</td></tr>';
+            });
+            legendHTML += '</tbody></table>';
+
+            if (standard === 'MSCI_Islamic') {
+                legendHTML += '<div style="margin-top:6px;padding:6px;background:#f0f7ff;border-radius:4px;font-size:10px;color:#1e40af;">' +
+                    '<strong>Exit Buffer:</strong> Existing constituents may exceed maintenance threshold up to 35% for debt/cash for 3 consecutive reviews before removal.</div>';
+            }
+            if (standard === 'Dow_Jones') {
+                legendHTML += '<div style="margin-top:6px;padding:6px;background:#fef3c7;border-radius:4px;font-size:10px;color:#92400e;">' +
+                    '<strong>Note:</strong> 2% buffer applies - existing constituents within 2% of threshold remain compliant for up to 3 periods.</div>';
+            }
+            if (standard === 'SC_Malaysia') {
+                legendHTML += '<div style="margin-top:6px;padding:6px;background:#f0fdf4;border-radius:4px;font-size:10px;color:#166534;">' +
+                    '<strong>Dual Benchmark:</strong> 5% threshold for interest income + prohibited activities; 20% threshold for mixed non-compliant activities.</div>';
+            }
+            if (standard === 'OJK_Indonesia') {
+                legendHTML += '<div style="margin-top:6px;padding:6px;background:#fdf2f8;border-radius:4px;font-size:10px;color:#9d174d;">' +
+                    '<strong>OJK Note:</strong> Non-halal income includes ALL prohibited revenue + interest income. Combined must be ≤10% of (Revenue + Interest Income).</div>';
+            }
+            document.getElementById('ratio-legend-content').innerHTML = legendHTML;
+
+            // 8. Update dropdown to match
+            document.getElementById('ShariahStandard').value = standard;
+
+            // 9. Recalculate QA
+            if (typeof getQAStatus === 'function') {
+                getQAStatus($);
+            }
+        }
+
+        // Helper: try to get value from igEditor
+        function tryGetEditor(id) {
+            try { return $('#TotalAsset').igNumericEditor('value'); } catch (e) { return null; }
+        }
+
+        // ============================================
+        // PAGE INIT
+        // ============================================
+        $(function () {
+            // Initialize benchmark layout
+            applyBenchmarkLayout('SC_Malaysia');
+
+            // Benchmark switcher
+            $('#ShariahStandard').change(function () {
+                applyBenchmarkLayout($(this).val());
+            });
+
+            // Open AI drawer from button
+            $('#open-ai-drawer, #open-ai-selector').click(function () {
+                $('#ai-drawer').removeClass('ai-drawer-closed').addClass('ai-drawer-open');
+            });
+
+            // Close AI drawer
+            $('#close-ai-drawer').click(function () {
+                $('#ai-drawer').removeClass('ai-drawer-open').addClass('ai-drawer-closed');
+            });
+
+            // Reset to benchmark defaults
+            $('#reset-bmk-defaults').click(function () {
+                applyBenchmarkLayout(currentBenchmark);
+                bootbox.alert('Layout reset to ' + BENCHMARK_CONFIG[currentBenchmark].title + ' defaults.');
+            });
+
+            // Receivables input handler
+            $('#AccountsReceivablesDisp').on('input change', function () {
+                var val = parseFloat($(this).val().replace(/[^0-9.-]/g, '')) || 0;
+                $('#AccountsReceivablesHidden').val(val);
+                $('#AccountsReceivables').val(val);
+                // Update displays
+                var ta = parseFloat($('#TotalAsset').igNumericEditor ? tryGetEditor('TotalAsset') : document.querySelector('input[name="TotalAsset"]').value) || 26331000;
+                document.getElementById('display-receivables').textContent = Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById('display-receivables-pct').textContent = '(' + ((ta > 0 ? (val / ta) * 100 : 0).toFixed(2)) + '%)';
+            });
+
+            // Market cap input handler
+            $('#AvgMarketCapDisp').on('input change', function () {
+                var val = parseFloat($(this).val().replace(/[^0-9.-]/g, '')) || 0;
+                $('#AvgMarketCapHidden').val(val);
+                $('#AvgMarketCap').val(val);
+                document.getElementById('display-marketcap').textContent = Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            });
+
+            // File import handler
+            $('#ai-json-file').on('change', function () {
+                var f = this.files && this.files[0];
+                if (!f) return;
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var jsonText = reader.result;
+                    $.ajax({
+                        url: '/Screening/NormalizeReviewJson',
+                        type: 'POST',
+                        data: { payload: jsonText },
+                        success: function (resp) {
+                            if (!resp || resp.success !== true) { bootbox.alert('AI normalization failed'); return; }
+                            var d = resp.data || {};
+                            // Apply values
+                            try { $('#GrossRevenue').igNumericEditor('value', Number(d.GrossRevenue || 0)); } catch (e) { }
+                            try { $('#GrossProfitLoss').igNumericEditor('value', Number(d.GrossProfitLoss || 0)); } catch (e) { }
+                            try { $('#TotalAsset').igNumericEditor('value', Number(d.TotalAsset || 0)); } catch (e) { }
+                            try { $('#InterestIncome').igNumericEditor('value', Number(d.InterestIncome || 0)); } catch (e) { }
+                            try { $('#Dividend').igNumericEditor('value', Number(d.Dividend || 0)); } catch (e) { }
+                            if (d.AccountsReceivables) { $('#AccountsReceivablesDisp').val(Number(d.AccountsReceivables).toLocaleString(undefined, { minimumFractionDigits: 2 })); $('#AccountsReceivablesHidden').val(d.AccountsReceivables); }
+                            if (d.AvgMarketCap) { $('#AvgMarketCapDisp').val(Number(d.AvgMarketCap).toLocaleString(undefined, { minimumFractionDigits: 2 })); $('#AvgMarketCapHidden').val(d.AvgMarketCap); }
+                            bootbox.alert('AI import applied. Review values before saving.');
+                        }
+                    });
+                };
+                reader.readAsText(f);
+            });
+
+            // Number formatters for display fields
+            $('.currencyFormat').each(function () {
+                var val = $(this).text().replace(/[^0-9.-]/g, '');
+                if (val) {
+                    $(this).text(Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                }
+            });
+        });
+    </script>
+
+    <!-- Includes from original system -->
+    <style>
+        /* Copy all AI drawer and benchmark styles from mystyle.css */
+        #ai-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 500px;
+            background: #ffffff;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        #ai-drawer.ai-drawer-closed {
+            transform: translateX(100%);
+        }
+
+        #ai-drawer.ai-drawer-open {
+            transform: translateX(0);
+        }
+
+        .ai-drawer-header {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .ai-drawer-header h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .ai-drawer-header .close-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .ai-drawer-header .close-btn:hover {
+            color: #ffffff;
+        }
+
+        .ai-drawer-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+            background: #f8fafc;
+        }
+
+        .ai-translation-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #3b82f6;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+        }
+
+        .ai-translation-card .lang-tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-bottom: 4px;
+        }
+
+        .ai-translation-card .original-text {
+            font-style: italic;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .ai-translation-card .translated-text {
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .ai-translation-card .source-tag {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        .ai-progress-container {
+            background: #e2e8f0;
+            border-radius: 9999px;
+            height: 8px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .ai-progress-bar {
+            height: 100%;
+            background: #3b82f6;
+            border-radius: 9999px;
+            transition: width 0.4s ease;
+        }
+
+        .ai-alert-info {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .ai-btn-success {
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+        }
+
+        .ai-btn-success:hover {
+            background: #059669;
+        }
+    </style>
+</body>
+
+</html>

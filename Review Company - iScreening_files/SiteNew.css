@@ -1,0 +1,16 @@
+﻿.brand-link
+{
+    background-color:white !important;
+}
+
+
+.modal-backdrop{
+    z-index:1000 !important;
+}
+
+
+.label {
+    padding: .2em .6em .3em;
+    color:white;
+}
+

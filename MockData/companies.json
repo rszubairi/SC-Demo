@@ -1,0 +1,265 @@
+[
+  {
+    "id": "nova",
+    "name": "Nova Wellness Group Bhd",
+    "country": "Malaysia",
+    "language": "Malay / English",
+    "fye": "30 Jun 2023",
+    "sector": "CONSUMER PRODUCT",
+    "regNo": "1196094-M",
+    "activities": [
+      "Development, production and sales of nutraceutical products under House Brand.",
+      "OEM development and production of nutraceutical products for customers.",
+      "Animal health: development and production of animal health products."
+    ],
+    "snippets": [
+      {
+        "original": "Penyata Kewangan Kedudukan Kewangan - Tunai dan baki bank: RM 2,058,000",
+        "english": "Financial Statement of Financial Position - Cash and bank balances: RM 2,058,000",
+        "source": "Page 45 - Note 12 (Cash and Cash Equivalents)"
+      },
+      {
+        "original": "Hasil kasar bagi tahun kewangan berakhir 30 Jun 2023 adalah RM 24,541,000",
+        "english": "Gross revenue for the financial year ended 30 June 2023 is RM 24,541,000",
+        "source": "Page 38 - Statement of Profit or Loss"
+      }
+    ],
+    "data": {
+      "GrossRevenue": 24541000,
+      "GrossProfitLoss": 13610000,
+      "TotalAsset": 26331000,
+      "InterestIncome": 5000,
+      "Dividend": 0,
+      "InterestIncomePercentage": 0.02,
+      "DividendPercentage": 0.0,
+      "AccountsReceivables": 1200000,
+      "AvgMarketCap": 35000000,
+      "CashAndDebts": [
+        {
+          "Id": "1",
+          "AppSettingId": "26",
+          "SettingName": "Cash and bank balances",
+          "Amount": 2058000,
+          "TypeName": "Cash"
+        }
+      ],
+      "CompanyActivities": []
+    }
+  },
+  {
+    "id": "indofood",
+    "name": "PT Indofood CBP Sukses Makmur Tbk",
+    "country": "Indonesia",
+    "language": "Indonesian",
+    "fye": "31 Dec 2023",
+    "sector": "FOOD & BEVERAGES",
+    "regNo": "ID1000112304",
+    "activities": [
+      "Manufacturing of instant noodles, dairy products, snack foods, food seasonings.",
+      "Nutrition and special foods, and beverage manufacturing."
+    ],
+    "snippets": [
+      {
+        "original": "Kas dan setara kas pada tanggal 31 Desember 2023 adalah sebesar Rp 15.200.000.000.000",
+        "english": "Cash and cash equivalents as of December 31, 2023 are Rp 15,200,000,000,000 (Approx. RM 4,560,000)",
+        "source": "Page 56 - Laporan Posisi Keuangan Konsolidasian"
+      },
+      {
+        "original": "Utang bank jangka pendek diperoleh dari beberapa bank konvensional sebesar Rp 18.500.000.000.000",
+        "english": "Short-term bank loans obtained from several conventional banks total Rp 18,500,000,000,000 (Approx. RM 5,550,000)",
+        "source": "Page 62 - Catatan atas Laporan Keuangan (Utang Bank)"
+      },
+      {
+        "original": "Liabilitas jangka panjang - Obligasi konvensional neto Rp 10.200.000.000.000",
+        "english": "Long-term liabilities - Net conventional bonds Rp 10,200,000,000,000 (Approx. RM 3,060,000)",
+        "source": "Page 68 - Catatan atas Laporan Keuangan (Obligasi)"
+      }
+    ],
+    "data": {
+      "GrossRevenue": 50000000,
+      "GrossProfitLoss": 8500000,
+      "TotalAsset": 60000000,
+      "InterestIncome": 45000,
+      "Dividend": 0,
+      "InterestIncomePercentage": 0.09,
+      "DividendPercentage": 0.0,
+      "AccountsReceivables": 4500000,
+      "AvgMarketCap": 75000000,
+      "CashAndDebts": [
+        {
+          "Id": "1",
+          "AppSettingId": "26",
+          "SettingName": "Cash and bank balances",
+          "Amount": 4560000,
+          "TypeName": "Cash"
+        },
+        {
+          "Id": "2",
+          "AppSettingId": "51",
+          "SettingName": "Deposits with licensed bank",
+          "Amount": 3000000,
+          "TypeName": "Cash"
+        },
+        {
+          "Id": "3",
+          "AppSettingId": "28",
+          "SettingName": "Current: Term loans",
+          "Amount": 5550000,
+          "TypeName": "Debt"
+        },
+        {
+          "Id": "4",
+          "AppSettingId": "76",
+          "SettingName": "Current: Conventional bonds",
+          "Amount": 3060000,
+          "TypeName": "Debt"
+        }
+      ],
+      "CompanyActivities": [
+        {
+          "ActivityId": "88",
+          "ActivityName": "Shariah Non-compliant Dividends",
+          "BenchmarkPercentage": 5.0,
+          "BenchmarkName": "5% Benchmark",
+          "TotalAmount": 20000,
+          "ProfitBtax": 0
+        },
+        {
+          "ActivityId": "106",
+          "ActivityName": "Rental Received From Non Halal Activity",
+          "BenchmarkPercentage": 20.0,
+          "BenchmarkName": "20% Benchmark",
+          "TotalAmount": 30000,
+          "ProfitBtax": 5000
+        }
+      ]
+    }
+  },
+  {
+    "id": "siamfood",
+    "name": "Siam Food Products Pcl",
+    "country": "Thailand",
+    "language": "Thai",
+    "fye": "31 Dec 2023",
+    "sector": "AGRICULTURE & FOOD",
+    "regNo": "TH0310512345",
+    "activities": [
+      "Production and export of canned pineapple, pineapple juice concentrate and other processed seasonal fruits.",
+      "Canned food products distribution and processing."
+    ],
+    "snippets": [
+      {
+        "original": "รายได้จากการขายผลิตภัณฑ์ผลไม้แปรรูปและอาหารกระป๋องในต่างประเทศมีจำนวน 1,200,000,000 บาท",
+        "english": "Revenue from sales of processed fruit products and canned foods overseas amounts to 1,200,000,000 THB (Approx. RM 15,000,000)",
+        "source": "Page 22 - งบกำไรขาดทุนเบ็ดเสร็จ"
+      },
+      {
+        "original": "เงินกู้ยืมระยะสั้นจากธนาคารพาณิชย์ที่มีอัตราดอกเบี้ยเป็นเกณฑ์อ้างอิงมีจำนวน 720,000,000 บาท",
+        "english": "Short-term loans from commercial banks bearing benchmark interest rates total 720,000,000 THB (Approx. RM 9,000,000)",
+        "source": "Page 34 - หมายเหตุประกอบงบการเงิน"
+      },
+      {
+        "original": "บริษัทมีรายได้จากการจำหน่ายอาหารกระป๋องที่ไม่ฮาลาล (หมูและเนื้อปรุงแต่ง) จำนวน 80,000,000 บาท",
+        "english": "The company has revenue from the sale of non-halal canned foods (processed pork and meat products) totaling 80,000,000 THB (Approx. RM 1,000,000)",
+        "source": "Page 40 - รายได้ส่วนงานธุรกิจย่อย"
+      }
+    ],
+    "data": {
+      "GrossRevenue": 15000000,
+      "GrossProfitLoss": 2500000,
+      "TotalAsset": 25000000,
+      "InterestIncome": 300000,
+      "Dividend": 0,
+      "InterestIncomePercentage": 2.0,
+      "DividendPercentage": 0.0,
+      "AccountsReceivables": 3200000,
+      "AvgMarketCap": 24000000,
+      "CashAndDebts": [
+        {
+          "Id": "1",
+          "AppSettingId": "26",
+          "SettingName": "Cash and bank balances",
+          "Amount": 5625000,
+          "TypeName": "Cash"
+        },
+        {
+          "Id": "2",
+          "AppSettingId": "28",
+          "SettingName": "Current: Term loans",
+          "Amount": 9000000,
+          "TypeName": "Debt"
+        }
+      ],
+      "CompanyActivities": [
+        {
+          "ActivityId": "101",
+          "ActivityName": "Non Halal Food",
+          "BenchmarkPercentage": 5.0,
+          "BenchmarkName": "5% Benchmark",
+          "TotalAmount": 1000000,
+          "ProfitBtax": 150000
+        }
+      ]
+    }
+  },
+  {
+    "id": "vinamilk",
+    "name": "Vietnam Dairy Products Joint Stock Co",
+    "country": "Vietnam",
+    "language": "Vietnamese",
+    "fye": "31 Dec 2023",
+    "sector": "AGRICULTURE & FOOD",
+    "regNo": "VN0000345678",
+    "activities": [
+      "Processing, manufacturing and breeding of raw milk and dairy products.",
+      "Logistics, storage, and wholesale distribution of consumer dairy beverages."
+    ],
+    "snippets": [
+      {
+        "original": "Tiền gửi ngân hàng có kỳ hạn ngắn hạn và các khoản tương đương tiền đạt mức 22.000.000.000.000 VND",
+        "english": "Short-term time deposits and cash equivalents reached 22,000,000,000,000 VND (Approx. RM 22,000,000)",
+        "source": "Page 15 - Báo cáo tình hình tài chính tóm tắt"
+      },
+      {
+        "original": "Các khoản vay ngắn hạn bằng VND chịu lãi suất từ 4,2% đến 5,8% một năm có tổng giá trị 9.000.000.000.000 VND",
+        "english": "Short-term VND loans bearing interest rates between 4.2% and 5.8% per annum total 9,000,000,000,000 VND (Approx. RM 9,000,000)",
+        "source": "Page 28 - Thuyết minh báo cáo tài chính"
+      }
+    ],
+    "data": {
+      "GrossRevenue": 24000000,
+      "GrossProfitLoss": 4000000,
+      "TotalAsset": 60000000,
+      "InterestIncome": 480000,
+      "Dividend": 0,
+      "InterestIncomePercentage": 2.0,
+      "DividendPercentage": 0.0,
+      "AccountsReceivables": 5000000,
+      "AvgMarketCap": 50000000,
+      "CashAndDebts": [
+        {
+          "Id": "1",
+          "AppSettingId": "26",
+          "SettingName": "Cash and bank balances",
+          "Amount": 10000000,
+          "TypeName": "Cash"
+        },
+        {
+          "Id": "2",
+          "AppSettingId": "115",
+          "SettingName": "Short term deposits",
+          "Amount": 12000000,
+          "TypeName": "Cash"
+        },
+        {
+          "Id": "3",
+          "AppSettingId": "28",
+          "SettingName": "Current: Term loans",
+          "Amount": 9000000,
+          "TypeName": "Debt"
+        }
+      ],
+      "CompanyActivities": []
+    }
+  }
+]

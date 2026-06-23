@@ -1,0 +1,545 @@
+﻿var loadPanel = null;
+
+function checkEnter(e) {
+
+    e = e || event;
+    var txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
+    return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
+}
+
+function applyFilters(filters, formId) {
+    
+    if (!filters) return;
+    var $form = $("#" + formId);
+    if ($form.length === 0) return;
+    // Map returned filters to inputs by name if present
+    Object.keys(filters).forEach(function (k) {
+        var v = filters[k];
+        var $el = $form.find('[name="' + k + '"]');
+        if ($el.length) {
+            $el.val(v);
+        }
+    });
+
+    //submit the form 
+    getAjaxPage(1);
+
+    try { if (onApplied) { eval(onApplied); } } catch (e) { }
+}
+
+function showAlertPopup(message, title, callback) {
+    title = title == null ? "Alert" : title;
+    $('#alert-message-content').html(message);
+    $('#alert-message').dxPopup({
+        showTitle: true,
+        showCloseButton: true,
+        title: title,
+        visible: true,
+        width: 500,
+        height: 'auto',
+        onHidden: function (p, w, m) {
+
+            var wp = $('#alert-message').parent();
+            $('#alert-message').remove();
+            wp.append('<div id="alert-message"><p id="alert-message-content"></p></div>');
+            if (callback != null)
+                callback.apply();
+
+        }
+    });
+}
+
+function removeAttachment(url, grid) {
+    showLoading(true);
+    executeRequest(url, 'GET', null, null)
+        .done(function (s) {
+
+            showLoading(false);
+            refreshGrid(grid);
+
+
+        }).always(function () {
+            showLoading(false);
+        });
+}
+
+function TakeInput(data,items,width,callBackMethod)
+{
+    //remove all if they exist
+    $('.take-input-div').remove();
+    $($('#take-input').html()).attr('id','take-input-d').appendTo('body');
+
+    ko.applyBindings({
+        showPopup: ko.observable(true),
+        popupWidth : width,
+        data: data, items: items, saveButton: function (e) {
+
+         e.model.showPopup(false);
+           
+            if (callBackMethod != null)
+                callBackMethod(e.model.data);
+
+           
+
+
+        }}, $('#take-input-d')[0]);
+
+
+
+}
+
+
+function notifyWhatHappened(msg, type) {
+    if (msg == undefined) {
+        if ($('#message').val() != '') {
+            DevExpress.ui.notify($('#message').val(), 'error', 5000);
+        }
+    }
+    else {
+        DevExpress.ui.notify(msg, type, 5000);
+    }
+
+}
+
+//multirange filter
+function dateFilter(e) {
+
+   
+    if (e.rowType == 'filter' && e.column.dataType == "date") {
+        var c = e.cellElement;
+        //remove the contents
+        c.html('');
+
+        $('<div id="search-Button-' + e.column.dataField + '"></div>').appendTo(c).dxButton({
+            icon: 'find',
+            onClick: function (d) {
+
+                $('#popup-' + e.column.dataField).dxPopover('instance').show();
+            }
+
+        });
+
+        $('<div id="popup-' + e.column.dataField + '"></div>').append('<label class="control-label">From :</label><div id="fromDate-' + e.column.dataField + '"></div>')
+            .append('<label class="control-label">To :</label><div id="toDate-' + e.column.dataField + '"></div>')
+            .append('<div class="clearfix">&nbsp;</div><div class="text-center"><button id="ok-' + e.column.dataField + '"></button> <button id="reset-' + e.column.dataField + '"></button></div>').appendTo(c).dxPopover({
+                target: '#search-Button-' + e.column.dataField,
+                showTitle: true,
+                title: 'Filter By ' + e.column.caption,
+                width: '400px',
+                height: '300px',
+                onShown: function (f) {
+
+                    if (f.element.data('isInit') == undefined) {
+                        f.element.data('isInit', true);
+                        $('#fromDate-' + e.column.dataField).dxDateBox({ formatString: "dd/MM/yyyy", width: '100%' });
+                        $('#toDate-' + e.column.dataField).dxDateBox({ formatString: "dd/MM/yyyy", width: '100%' });
+                        $('#reset-' + e.column.dataField).dxButton({
+                            text: 'Reset',
+                            icon: 'clear',
+                            onClick: function (q) {
+                                e.component.clearFilter('dataSource');
+                                $('#popup-' + e.column.dataField).dxPopover('instance').hide();
+                            }
+                        });
+                        $('#ok-' + e.column.dataField).dxButton({
+                            height: '40px',
+                            text: 'Filter',
+                            icon: 'find',
+                            onClick: function (q) {
+                               
+                                //perform the search based on the filters of the from and todate
+                                var fDate = $('#fromDate-' + e.column.dataField).dxDateBox('instance').option().text;
+                                var tDate = $('#toDate-' + e.column.dataField).dxDateBox('instance').option().text;
+
+                                e.component.filter([[e.column.dataField, '>=', fDate], 'and', [e.column.dataField, '<', tDate]]);
+                                //hide the popup also .
+                                $('#popup-' + e.column.dataField).dxPopover('instance').hide();
+                            }
+                        })
+                    }
+                }
+            });
+
+
+
+
+    }
+}
+
+//function to perform ByKey For CustomStores
+function byKeyCust(url) {
+    var d = new $.Deferred();
+
+    $.ajax({
+        cache: false,
+        url: url,
+        method: 'GET'
+    }).done(function (data) {
+        d.resolve(data[0]);
+    });
+
+    return d.promise();
+
+}
+
+//rotates the spinner on the right corner
+function showSpinner(show) {
+    if (show) {
+        $('#refresh-spinner').attr('class', 'fa fa-refresh fa-pulse fa-2x');
+    }
+    else {
+        $('#refresh-spinner').attr('class', 'fa fa-refresh fa-2x');
+    }
+
+}
+
+function hideLoading() {
+    if (loadPanel != null || loadPanel != undefined) {
+        loadPanel.hide();
+    }
+
+}
+
+function showLoading(msg) {
+    msg = typeof msg !== 'undefined' || msg == 'Loading' ? msg : 'Sedang Dimuat Naik';
+    //msg = msg.trim() != null ? null : 'Processing';
+    if (loadPanel == null) {
+        $("#loadPanel").dxLoadPanel({
+            message: msg + '...',
+            showIndicator: true,
+            visible: false
+        });
+
+        loadPanel = $("#loadPanel").dxLoadPanel('instance');
+        loadPanel.show();
+    }
+    else {
+        loadPanel.option('message', msg);
+        loadPanel.show();
+    }
+
+
+
+}
+
+function showConfirm(message, title) {
+    var result = DevExpress.ui.dialog.confirm(message, title);
+    return result;
+}
+
+
+function loadPopup(url, popupId) {
+    $.ajax({
+        url: url,
+        cache: false,
+        method: "GET"
+    }).done(function (html) {
+
+        $(popupId).dxPopover('instance').option('contentTemplate', html);
+        $(popupId).dxPopover('instance').show();
+    });
+
+}
+
+
+function prepareFilter(filterArray) {
+    var filterOpt = [];
+    if (filterArray != undefined) {
+
+        if (filterArray.indexOf('and') == -1) {
+            filterOpt.push({ name: filterArray[0], comp: filterArray[1], value: filterArray[2] });
+        }
+        else {
+            //now we will do a checkig
+            $.each(filterArray, function (i, item) {
+
+
+                if (item.indexOf('and') == -1) {
+                    if (item != 'and') {
+                        //it is an array
+                        filterOpt.push({ name: item[0], comp: item[1], value: item[2] });
+                    }
+                }
+                else {
+                    if (item != 'and') {
+                        var j = item[0];
+                        var j2 = item[2];
+                        //it is an array
+                        filterOpt.push({ name: j[0], comp: j[1], value: j[2] });
+                        filterOpt.push({ name: j2[0], comp: j2[1], value: j2[2] });
+                    }
+                }
+
+
+            });
+        }
+
+    }
+
+    return filterOpt;
+}
+
+
+var selectAll;
+var selectedAlready;
+var totalCount;
+var totalSum;
+
+
+
+function selectBoxLoader(loadOptions, url) {
+
+    var params = null;
+
+    if (loadOptions) {
+        var filterOpt = loadOptions.filter ? prepareFilter(loadOptions.filter) : [];
+
+        params = {
+            filterOptions: JSON.stringify(filterOpt),   //Getting filter options
+            sortOptions: loadOptions.sort ? JSON.stringify(loadOptions.sort) : null,  //Getting sort options
+
+            //skip and take are used for paging
+            skip: loadOptions.skip, //A number of records that should be skipped 
+            take: loadOptions.take //A number of records that should be taken
+        };
+
+        if (loadOptions.select) {
+            params.select = JSON.stringify(loadOptions.select);
+        }
+
+        if (loadOptions.TotalSum) {
+            params.totalSum = loadOptions.TotalSum;
+        }
+    }
+
+
+    var d = new $.Deferred();
+
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: params,
+        type: 'GET',
+        cache: false
+    })
+    .done(function (result) {
+
+        d.resolve(result, { totalCount: result.Count });
+    });
+
+    return d;
+
+
+}
+
+
+//super sorter pager load function
+function pageLoader(loadOptions, url, moreparams) {
+
+
+    var filterOpt = prepareFilter(loadOptions.filter);
+
+    var params = {
+        filterOptions: JSON.stringify(filterOpt),   //Getting filter options
+        sortOptions: loadOptions.sort ? JSON.stringify(loadOptions.sort) : null,  //Getting sort options
+
+        //skip and take are used for paging
+        skip: loadOptions.skip, //A number of records that should be skipped 
+        take: loadOptions.take //A number of records that should be taken
+    };
+
+    if (moreparams != undefined && moreparams != null) {
+        $.extend(params, moreparams)
+    }
+
+
+
+    if (loadOptions.select) {
+        params.select = JSON.stringify(loadOptions.select);
+    }
+
+    if (loadOptions.TotalSum) {
+        params.totalSum = loadOptions.TotalSum;
+    }
+
+    var d = new $.Deferred();
+    d.secondDef = new $.Deferred();
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: params,
+        type: 'GET',
+        cache: false
+    })
+    .done(function (result) {
+
+        var columns;
+        if (result.isJson) {
+            selectedAlready = true;
+            data = $.parseJSON(result.List);
+            columns = $.parseJSON(result.Columns);
+            if (result.Count === undefined || result.Count === 0) {
+                result.Count = data.length;
+            }
+            totalSum = result.TotalSum.toFixed(2);
+        }
+        else {
+            data = $.parseJSON(result.List)
+            columns = $.parseJSON(result.Columns);
+            totalSum = result.TotalSum.toFixed(2);
+        }
+        totalCount = result.Count;
+
+        d.secondDef.resolve(columns);
+        d.resolve(data, { totalCount: result.Count });
+        hideLoading();
+    });
+
+    return d;
+}
+
+
+
+//update method for grids
+function updateGrid(model, url, id) {
+
+
+    $.ajax({
+        url: url,
+        cache: false,
+        method: 'POST',
+        dataType: 'json',
+        data: model
+    }).done(function (data) {
+
+        hideLoading();
+       
+        if (!data.success) {
+            showAlertPopup(data.message, 'Alert');
+        }
+        else {
+            $(id).dxDataGrid('instance').refresh();
+        }
+    });
+
+
+}
+
+function deleteGrid(key, url, id) {
+
+
+    $.ajax({
+        url: url + "?Id=" + key,
+        cache: false,
+        method: 'GET',
+    }).done(function (data) {
+
+        if (data.errorMessage) {
+
+            showAlertPopup(data.errorMessage, 'Alert');
+        }
+
+        hideLoading();
+        $(id).dxDataGrid('instance').refresh();
+
+    });
+
+
+}
+
+
+function refreshGrid(grid, notfull) {
+    if (notfull == undefined) {
+        grid.clearFilter();
+        grid.clearSelection();
+        grid.clearSorting();
+        grid.pageIndex(0);
+    }
+
+    grid.refresh();
+}
+
+
+//function to implement header with button with custom callback method
+//render the pencil button
+function renderHeaderButton(ch, hi, onclick, icon) {
+
+    var buttonX = $('<button style="margin-right:5px;" class="btn btn-sm btn-sharp" data-column="' + hi.column.dataField + '"><i class="fa ' + icon + '"></i></button>');
+    $('<div>').html(hi.column.caption).prepend(buttonX).appendTo(ch);
+
+    buttonX.on('click', onclick);
+}
+
+
+function executeRequest(u, m, d, dt) {
+    if (m == "POST") {
+        return $.ajax({
+            url: u,
+            method: m,
+            data: d,
+            dataType:dt,
+            cache: false
+        });
+    }
+    else {
+        return $.ajax({
+            url: u,
+            method: m,
+            cache: false
+        });
+    }
+}
+
+function saveUserColumns(grid, url) {
+    var columnArray = grid.option('columns');
+    var vwArray = [];
+
+    $.each(columnArray, function (i, v) {
+
+        
+        vwArray.push({
+            'dataField': v.dataField,
+            'visibleIndex': grid.columnOption(v.dataField).visibleIndex,
+            'visibleWidth': grid.columnOption(v.dataField).visibleWidth == undefined ? '100px' : grid.columnOption(v.dataField).visibleWidth
+        });
+        
+    });
+
+
+    executeRequest(url, 'POST', { data: vwArray }, 'application/json')
+    .done(function (s) {
+
+    });
+
+}
+
+
+function applyUserConfig(grid,url)
+{
+    executeRequest(url, 'GET', null,'application/json')
+    .done(function (s) {
+        
+        
+        if (s.config == null || s.config == undefined) {
+            loadstate = true;
+            return;
+        }
+
+
+        $.each(s.config, function (i, v) {
+
+            grid.columnOption(v.dataField, 'visibleIndex', v.visibleIndex);
+            grid.columnOption(v.dataField, 'visibleWidth', v.visibleWidth);
+
+
+        });
+
+        loadstate = true;
+
+    });
+
+
+
+}

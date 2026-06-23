@@ -1,0 +1,12 @@
+{
+  "name": "sc-screening-demo",
+  "version": "1.0.0",
+  "description": "Securities Commission Shariah Screening AI Enhancement Demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

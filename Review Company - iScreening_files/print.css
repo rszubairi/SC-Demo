@@ -1,0 +1,35 @@
+﻿* {
+    padding:0px;
+    margin:0px;
+}
+
+.addbtn, .dashboard-buttons, .adddebt, .addcash, .btn, select, .notebox, .add-activity, button, .querybox {
+    display: none;
+}
+
+.logout{
+    display:none !important;
+}
+
+.showprint {
+    display: block !important;
+}
+
+.oic-printtag{
+    display:block !important;
+    float:left;
+}
+
+.printsize2 {
+    width: 15% !important;
+}
+
+.printsize4{
+    width:30% !important;
+}
+
+
+.pagebreak {
+    clear: both;
+    page-break-after: always;
+}

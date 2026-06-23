@@ -1,0 +1,189 @@
+﻿
+jQuery.fn.ForceNumericOnly = function (allowNegative) {
+    if (allowNegative == null) {
+        allowNegative = false;
+    }
+
+    return this.each(function () {
+        $this = $(this);
+
+        $this.keydown(function (e) {
+            var val = $(this).val();
+
+            if (val == 0)
+                val = "";
+
+            var key = e.charCode || e.keyCode || 0;
+
+            if ((allowNegative == true && val.length == 0 && key == 109) ||
+                (allowNegative == true && val.length == 0 && key == 189 && (e.shiftKey == false || e.shiftKey == 'false'))) {
+                return true;
+            }
+            // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
+            // home, end, period, and numpad decimal
+            return (
+                key == 8 ||
+                key == 9 ||
+                key == 13 ||
+                key == 46 ||
+                (val.indexOf('.') < 0 && key == 110) ||
+                (val.indexOf('.') < 0 && key == 190 && (e.shiftKey == false || e.shiftKey == 'false')) ||
+                (key >= 35 && key <= 40) ||
+                (key >= 48 && key <= 57) ||
+                (key >= 96 && key <= 105));
+        });
+
+
+    });
+};
+
+jQuery.fn.RoundToDecimal = function (places) {
+    var value = this.val() == "" ? 0 : this.val();
+
+    if (!isNaN(value)) {
+        var num = Math.pow(10, places);
+        var value = Math.round(parseFloat(value) * num) / num;
+        this.val(value.toFixed(2));
+    }
+};
+
+
+jQuery.fn.formatCurrency = function (allowNegative) {
+
+
+    //return this.each(function () {
+    //    var $this = $(this);
+
+    //    if ($this.is('input')) {
+    //        $this.on("keyup paste", function () {
+
+    //            $this.priceFormat({
+    //                allowNegative: allowNegative == undefined ? false : allowNegative,
+    //                prefix: "",
+    //                centsLimit: 2,
+    //                thousandsSeparator: ','
+    //            });
+
+    //        });
+    //    }
+
+    //    $this.priceFormat({
+    //        allowNegative: allowNegative == undefined ? false : allowNegative,
+    //        prefix: "",
+    //        centsLimit: 2,
+    //        thousandsSeparator: ','
+    //    });
+
+    //});
+
+
+
+    return this;
+};
+
+jQuery.fn.unmaskDecimal = function () {
+    return this.unmask();
+};
+
+Number.prototype.RoundToDecimal = function (places) {
+    var value = this;
+    if (!isNaN(value)) {
+        var num = Math.pow(10, places);
+        var value = Math.round(parseFloat(value) * num) / num;
+        return value.toFixed(2);
+    }
+};
+
+jQuery.fn.CorrectFormat = function () {
+    if ($(this).val() == "") {
+        $(this).val("0.00");
+    }
+    else {
+        var value = Number.parseLocale($(this).val()).localeFormat("N2");
+        if (value.indexOf("NaN") >= 0) {
+            $(this).val(Number.parseLocale(0).localeFormat("N2"));
+        } else {
+            $(this).val(value);
+        }
+    }
+    $this = $(this);
+    $this.focus(function () {
+        if ($this.val() == "0.00") {
+            $this.val("");
+        }
+    });
+    $this.focusout(function () {
+        if ($this.val() == "") {
+            $this.val("0.00");
+        }
+    });
+
+};
+
+jQuery.fn.priceFormat = function (options) {
+
+    var defaults =
+    {
+        prefix: 'US$ ',
+        thousandsSeparator: ',',
+        centsLimit: 2,
+        allowNegative: false
+    };
+
+    var options = $.extend(defaults, options);
+
+    var num = "";
+
+    if ($(this).is('input')) {
+        num = this.val();
+    } else {
+        num = this.text();
+    }
+
+    var isNegative = num.indexOf("-")
+    num = num.toString().replace(/[^0-9\.\,]+/g, '');
+    num = num.replace(/^[0]+/, '');
+    if (num.length < 1) {
+        num = "0"
+    }
+
+    var str = num.toString().replace(options.prefix, ""), parts = false, output = [], i = 1, formatted = null;
+
+    if (str.indexOf(".") > -1) {
+        parts = str.split(".");
+        str = parts[0];
+    }
+    str = str.split("").reverse();
+    for (var j = 0, len = str.length; j < len; j++) {
+        if (str[j] != ",") {
+            output.push(str[j]);
+            if (i % 3 == 0 && j < (len - 1)) {
+                output.push(options.thousandsSeparator);
+            }
+            i++;
+        }
+    }
+    formatted = output.reverse().join("").trim();
+    formatted = (formatted == "") ? "0" : formatted;
+    intermediateOutput = (formatted + ((parts) ? "." + parts[1].substr(0, options.centsLimit) : ""));
+    finalOutput = (options.allowNegative && isNegative >= 0 ? options.prefix + "-" + intermediateOutput : options.prefix + intermediateOutput)
+
+    if ($(this).is('input')) {
+        this.val(finalOutput);
+    } else {
+        this.text(finalOutput);
+    }
+
+
+};
+
+function numberPadding(string, padSize, padChar, dir) {
+    while (string.length < padSize) {
+        string = (dir = "L") ? padChar + string : string + padChar;
+    }
+}
+
+jQuery.fn.unmask = function () {
+    var formattedNumber = this.val();
+    return parseFloat(formattedNumber.replace(/[^0-9\.\-]+/g, ''));
+};
