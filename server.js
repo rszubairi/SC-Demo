@@ -450,7 +450,11 @@ app.post('/Screening/NormalizeReviewJson', (req, res) => {
   }
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`SC iScreening Demo Server running at http://localhost:${PORT}`);
-});
+// Start the server (local dev only)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`SC iScreening Demo Server running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
