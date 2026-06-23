@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Benchmark Creator - iScreening</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/adminlte.min.css">
+    <link rel="stylesheet" href="./Review Company - iScreening_files/OverlayScrollbars.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f4f6f9; }
+        .page-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2980b9 100%);
+            color: white;
+            padding: 32px 40px;
+            border-radius: 0 0 16px 16px;
+            margin-bottom: 32px;
+        }
+        .page-header h1 { font-family: 'Outfit', sans-serif; font-size: 1.8em; margin: 0; }
+        .page-header p { margin: 6px 0 0; opacity: 0.85; font-size: 0.95em; }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        .step-indicator {
+            display: flex;
+            gap: 0;
+            margin-bottom: 36px;
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        .step.active .step-circle { background: #3b82f6; color: white; }
+        .step.done .step-circle { background: #22c55e; color: white; }
+        .step-label { font-size: 0.78em; color: #64748b; font-weight: 500; }
+        .step.active .step-label { color: #3b82f6; font-weight: 600; }
+        .step.done .step-label { color: #22c55e; }
+
+        /* Upload zone */
+        .upload-zone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+        .upload-zone:hover, .upload-zone.drag-over {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .upload-zone i { font-size: 3em; color: #94a3b8; margin-bottom: 16px; display: block; }
+        .upload-zone h3 { font-family: 'Outfit', sans-serif; color: #334155; margin: 0 0 8px; }
+        .upload-zone p { color: #64748b; margin: 0; font-size: 0.9em; }
+        .upload-zone .supported { font-size: 0.8em; color: #94a3b8; margin-top: 12px; }
+        .btn-upload {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+            font-size: 0.9em;
+        }
+        .btn-upload:hover { background: #2563eb; }
+
+        /* Processing panel */
+        #processing-panel { display: none; }
+        .processing-steps { list-style: none; padding: 0; margin: 24px 0 0; }
+        .processing-steps li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.92em;
+            color: #64748b;
+            background: #f8fafc;
+            transition: all 0.3s;
+        }
+        .processing-steps li.running { background: #eff6ff; color: #1d4ed8; }
+        .processing-steps li.done { background: #f0fdf4; color: #15803d; }
+        .processing-steps li .icon { width: 24px; text-align: center; }
+        .spinner { animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        /* Generated form */
+        #result-panel { display: none; }
+        .generated-badge {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.88em;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-section { margin-bottom: 28px; }
+        .form-section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-section-title i { color: #3b82f6; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-grid.three-col { grid-template-columns: 1fr 1fr 1fr; }
+        .form-field label {
+            display: block;
+            font-size: 0.82em;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .form-field input, .form-field select {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 7px;
+            font-size: 0.9em;
+            color: #334155;
+            background: #f8fafc;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-field input:focus, .form-field select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+        }
+        .threshold-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+        }
+        .threshold-row .label { flex: 1; font-size: 0.88em; color: #334155; font-weight: 500; }
+        .threshold-row input { width: 90px; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.88em; text-align: right; }
+        .threshold-row .unit { font-size: 0.82em; color: #94a3b8; width: 30px; }
+        .threshold-row .type-badge {
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .type-badge.max { background: #fef2f2; color: #dc2626; }
+        .type-badge.min { background: #f0fdf4; color: #16a34a; }
+
+        .ai-insight {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            border: 1px solid #667eea30;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+            font-size: 0.88em;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .ai-insight strong { color: #4f46e5; }
+
+        .btn-primary-action {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+        .btn-primary-action:hover { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .btn-secondary-action {
+            background: white;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .success-toast {
+            display: none;
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: #22c55e;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9em;
+            z-index: 9999;
+            box-shadow: 0 8px 24px rgba(34,197,94,0.3);
+            align-items: center;
+            gap: 8px;
+        }
+        .file-info {
+            display: none;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            font-size: 0.88em;
+            color: #0369a1;
+            align-items: center;
+            gap: 10px;
+        }
+        .benchmark-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .bm-option {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .bm-option:hover { border-color: #3b82f6; color: #3b82f6; }
+        .bm-option.selected { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
+        .bm-option .doc-name { font-size: 0.75em; color: #94a3b8; font-weight: 400; display: block; margin-top: 2px; }
+    </style>
+</head>
+<body class="sidebar-mini layout-fixed">
+
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/"><i class="fas fa-arrow-left"></i> Back to iScreening</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <span class="nav-link" style="color:#64748b; font-size:0.85em;">
+                    <i class="fas fa-robot" style="color:#667eea;"></i> AI-Powered Benchmark Studio
+                </span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content-wrapper" style="padding: 0; background:#f4f6f9;">
+        <div class="page-header">
+            <div style="display:flex; align-items:center; gap:16px;">
+                <div style="background:rgba(255,255,255,0.15); border-radius:12px; padding:14px 16px;">
+                    <i class="fas fa-brain" style="font-size:1.8em;"></i>
+                </div>
+                <div>
+                    <div class="ai-badge" style="margin-bottom:8px;"><i class="fas fa-sparkles"></i> AI-Powered</div>
+                    <h1>Benchmark Creation Studio</h1>
+                    <p>Upload any Shariah screening methodology document — our AI reads it and generates a ready-to-use compliance form automatically.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding: 0 32px 40px;">
+
+            <!-- Step indicator -->
+            <div class="step-indicator" id="step-indicator">
+                <div class="step active" id="step-1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Upload Document</div>
+                </div>
+                <div class="step" id="step-2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">AI Analysis</div>
+                </div>
+                <div class="step" id="step-3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Review &amp; Configure</div>
+                </div>
+                <div class="step" id="step-4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Activate Benchmark</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Upload -->
+            <div id="upload-panel" class="card">
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.2em; color:#1e293b; margin:0 0 6px;">
+                    <i class="fas fa-file-upload" style="color:#3b82f6;"></i> Upload Benchmark Methodology
+                </h2>
+                <p style="color:#64748b; font-size:0.9em; margin:0 0 24px;">Supported formats: PDF, Word (.docx), or plain text. The AI will extract all quantitative thresholds, ratio definitions, and data requirements.</p>
+
+                <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Drop your methodology document here</h3>
+                    <p>or click to browse files</p>
+                    <p class="supported">PDF · DOCX · TXT &nbsp;|&nbsp; Max 50MB</p>
+                    <button class="btn-upload" onclick="event.stopPropagation(); document.getElementById('file-input').click()">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </button>
+                </div>
+                <input type="file" id="file-input" accept=".pdf,.docx,.txt" style="display:none" onchange="handleFileSelect(this)">
+
+                <div class="file-info" id="file-info">
+                    <i class="fas fa-file-pdf" style="font-size:1.4em; color:#ef4444;"></i>
+                    <div>
+                        <div id="file-name" style="font-weight:600;"></div>
+                        <div id="file-size" style="font-size:0.85em; color:#64748b;"></div>
+                    </div>
+                    <i class="fas fa-check-circle" style="margin-left:auto; color:#22c55e; font-size:1.2em;"></i>
+                </div>
+
+                <div style="margin-top:24px; border-top:1px solid #f1f5f9; padding-top:20px;">
+                    <p style="font-size:0.85em; color:#94a3b8; margin:0 0 12px;">Or try with one of our sample documents:</p>
+                    <div class="benchmark-selector">
+                        <div class="bm-option" onclick="selectSample('sc')">
+                            SC Malaysia
+                            <span class="doc-name">SC_Shariah_Screening_2023.pdf</span>
+                        </div>
+                        <div class="bm-option" onclick="selectSample('ojk')">
+                            OJK Indonesia
+                            <span class="doc-name">POJK_35_2017.pdf</span>
+                        </div>
+                        <div class="bm-option" onclick="selectSample('msci')">
+                            MSCI Islamic
+                            <span class="doc-name">MSCI_Islamic_Methodology.pdf</span>
+                        </div>
+                        <div class="bm-option" onclick="selectSample('dj')">
+                            Dow Jones Islamic
+                            <span class="doc-name">DJIM_Index_Methodology.pdf</span>
+                        </div>
+                        <div class="bm-option" onclick="selectSample('aaoifi')">
+                            AAOIFI Standard
+                            <span class="doc-name">AAOIFI_SS21_Screening.pdf</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:24px; text-align:right;">
+                    <button class="btn-primary-action" id="analyze-btn" onclick="startAnalysis()" disabled style="opacity:0.5; cursor:not-allowed;">
+                        <i class="fas fa-brain"></i> Analyse with AI
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Processing -->
+            <div id="processing-panel" class="card">
+                <div style="text-align:center; padding:20px 0 10px;">
+                    <div style="font-size:3em; margin-bottom:16px;">🤖</div>
+                    <h2 style="font-family:'Outfit',sans-serif; font-size:1.3em; color:#1e293b; margin:0 0 6px;">AI is Reading Your Document</h2>
+                    <p style="color:#64748b; font-size:0.9em; margin:0;" id="processing-subtitle">Extracting screening methodology and financial thresholds...</p>
+                </div>
+                <ul class="processing-steps" id="processing-steps">
+                    <li id="pstep-1"><span class="icon"><i class="fas fa-circle" style="font-size:0.5em; color:#e2e8f0;"></i></span> Parsing document structure and sections</li>
+                    <li id="pstep-2"><span class="icon"><i class="fas fa-circle" style="font-size:0.5em; color:#e2e8f0;"></i></span> Identifying financial ratio definitions</li>
+                    <li id="pstep-3"><span class="icon"><i class="fas fa-circle" style="font-size:0.5em; color:#e2e8f0;"></i></span> Extracting quantitative thresholds and limits</li>
+                    <li id="pstep-4"><span class="icon"><i class="fas fa-circle" style="font-size:0.5em; color:#e2e8f0;"></i></span> Mapping data fields to screening parameters</li>
+                    <li id="pstep-5"><span class="icon"><i class="fas fa-circle" style="font-size:0.5em; color:#e2e8f0;"></i></span> Generating compliance form schema</li>
+                    <li id="pstep-6"><span class="icon"><i class="fas fa-circle" style="font-size:0.5em; color:#e2e8f0;"></i></span> Validating completeness and accuracy</li>
+                </ul>
+            </div>
+
+            <!-- Step 3: Generated Form -->
+            <div id="result-panel">
+                <div class="generated-badge">
+                    <i class="fas fa-check-circle"></i>
+                    AI successfully extracted <strong id="field-count">18 data fields</strong> and <strong id="threshold-count">6 compliance thresholds</strong> from your document.
+                    &nbsp;·&nbsp; <span id="doc-label" style="color:#0369a1;"></span>
+                </div>
+
+                <div class="ai-insight" id="ai-insight">
+                    <strong>🤖 AI Summary:</strong> The SC Malaysia Shariah Screening Methodology applies a two-tier activity benchmark (5% and 20%) based on revenue and pre-tax profit contributions from non-permissible activities. Financial ratios use Total Assets as the denominator for both cash and debt limits, each capped at 33%. Interest income is classified as a 5%-tier non-permissible activity.
+                </div>
+
+                <div class="card">
+                    <h2 style="font-family:'Outfit',sans-serif; font-size:1.15em; color:#1e293b; margin:0 0 4px;">
+                        <i class="fas fa-sliders-h" style="color:#3b82f6;"></i> Generated Benchmark Configuration
+                    </h2>
+                    <p style="color:#64748b; font-size:0.85em; margin:0 0 24px;">Review and adjust the AI-extracted parameters before activating.</p>
+
+                    <!-- Basic Info -->
+                    <div class="form-section">
+                        <div class="form-section-title"><i class="fas fa-tag"></i> Benchmark Identity</div>
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label>Benchmark Name</label>
+                                <input type="text" id="bm-name" value="SC Malaysia Shariah Screening">
+                            </div>
+                            <div class="form-field">
+                                <label>Issuing Authority</label>
+                                <input type="text" id="bm-authority" value="Securities Commission Malaysia">
+                            </div>
+                            <div class="form-field">
+                                <label>Version / Year</label>
+                                <input type="text" id="bm-version" value="2023 Edition">
+                            </div>
+                            <div class="form-field">
+                                <label>Review Frequency</label>
+                                <select>
+                                    <option selected>Semi-Annual</option>
+                                    <option>Annual</option>
+                                    <option>Quarterly</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Financial Data Fields -->
+                    <div class="form-section">
+                        <div class="form-section-title"><i class="fas fa-database"></i> Required Financial Data Fields</div>
+                        <p style="font-size:0.85em; color:#64748b; margin:0 0 14px;">These fields will be presented to users when screening a company under this benchmark.</p>
+                        <div class="form-grid three-col" id="data-fields-grid">
+                            <!-- populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Compliance Thresholds -->
+                    <div class="form-section">
+                        <div class="form-section-title"><i class="fas fa-balance-scale"></i> Compliance Thresholds</div>
+                        <p style="font-size:0.85em; color:#64748b; margin:0 0 14px;">Adjust the thresholds extracted from the document.</p>
+                        <div id="thresholds-container">
+                            <!-- populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Activity Classification -->
+                    <div class="form-section" id="activities-section">
+                        <div class="form-section-title"><i class="fas fa-list-ul"></i> Non-Permissible Activity Classification</div>
+                        <p style="font-size:0.85em; color:#64748b; margin:0 0 14px;">Activity tiers and their revenue/PBT limits.</p>
+                        <div id="activities-container">
+                            <!-- populated by JS -->
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid #f1f5f9; padding-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                        <button class="btn-secondary-action" onclick="resetToUpload()" style="margin-left:0;">
+                            <i class="fas fa-redo"></i> Upload Different Document
+                        </button>
+                        <div>
+                            <button class="btn-secondary-action" onclick="showToast()">
+                                <i class="fas fa-download"></i> Export Config
+                            </button>
+                            <button class="btn-primary-action" onclick="activateBenchmark()">
+                                <i class="fas fa-check"></i> Activate Benchmark
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Success toast -->
+<div class="success-toast" id="success-toast" style="display:flex; display:none;">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-msg">Benchmark activated successfully!</span>
+</div>
+
+<script src="./Review Company - iScreening_files/jquery.fileupload.js.download" type="text/javascript"></script>
+<script src="./Review Company - iScreening_files/adminlte.min.js.download"></script>
+<script>
+
+const BENCHMARK_DATA = {
+    sc: {
+        name: 'SC Malaysia Shariah Screening',
+        authority: 'Securities Commission Malaysia',
+        version: '2023 Edition',
+        review: 'Semi-Annual',
+        fieldCount: '18 data fields',
+        thresholdCount: '6 compliance thresholds',
+        docLabel: 'SC_Shariah_Screening_2023.pdf',
+        insight: '🤖 <strong>AI Summary:</strong> The SC Malaysia Shariah Screening Methodology applies a two-tier activity benchmark (5% and 20%) based on revenue and pre-tax profit contributions from non-permissible activities. Financial ratios use Total Assets as the denominator for both cash and debt limits, each capped at 33%. Interest income is classified under the 5%-tier non-permissible activity benchmark.',
+        fields: [
+            'Gross Revenue', 'Gross Profit / Loss (PBT)', 'Total Assets',
+            'Interest Income', 'Cash & Cash Equivalents', 'Interest-Bearing Debt',
+            'Dividends Received', 'Non-Permissible Revenue (5% Tier)', 'Non-Permissible PBT (5% Tier)',
+            'Non-Permissible Revenue (20% Tier)', 'Non-Permissible PBT (20% Tier)', 'Activity Description',
+            'Financial Year End', 'Reporting Currency', 'Audited / Unaudited Flag',
+            'Company Registration No.', 'Sector Classification', 'Screening Date'
+        ],
+        thresholds: [
+            { label: 'Cash & Cash Equivalents / Total Assets', value: 33, unit: '%', type: 'max' },
+            { label: 'Interest-Bearing Debt / Total Assets', value: 33, unit: '%', type: 'max' },
+            { label: '5% Tier: Non-Permissible Revenue / Gross Revenue', value: 5, unit: '%', type: 'max' },
+            { label: '5% Tier: Non-Permissible PBT / Gross PBT', value: 5, unit: '%', type: 'max' },
+            { label: '20% Tier: Non-Permissible Revenue / Gross Revenue', value: 20, unit: '%', type: 'max' },
+            { label: '20% Tier: Non-Permissible PBT / Gross PBT', value: 20, unit: '%', type: 'max' },
+        ],
+        activities: [
+            { tier: '5% Benchmark', desc: 'Conventional banking, insurance, pawn-broking, riba-based lending, non-halal food & beverages, interest income' },
+            { tier: '20% Benchmark', desc: 'Hotel & resort operations, share trading, stock-broking, rental from non-permissible activities, tobacco products' },
+        ]
+    },
+    ojk: {
+        name: 'OJK Indonesia Shariah Screening',
+        authority: 'Otoritas Jasa Keuangan (OJK)',
+        version: 'POJK No. 35/2017',
+        review: 'Annual',
+        fieldCount: '12 data fields',
+        thresholdCount: '2 compliance thresholds',
+        docLabel: 'POJK_35_2017.pdf',
+        insight: '🤖 <strong>AI Summary:</strong> POJK 35 focuses on two primary quantitative screens: total interest-bearing debt relative to total assets (≤45%) and non-halal income relative to total revenue including interest (≤10%). All non-permissible revenue streams are aggregated into a single non-halal income pool for the income ratio calculation.',
+        fields: [
+            'Gross Revenue', 'Total Assets', 'Interest Income',
+            'Interest-Bearing Debt', 'Non-Halal Revenue Streams', 'Activity Description',
+            'Financial Year End', 'Reporting Currency', 'Company Registration No.',
+            'Sector Classification', 'Audited Flag', 'Screening Period'
+        ],
+        thresholds: [
+            { label: 'Total Interest-Bearing Debt / Total Assets', value: 45, unit: '%', type: 'max' },
+            { label: 'Non-Halal Income / (Total Revenue + Interest Income)', value: 10, unit: '%', type: 'max' },
+        ],
+        activities: [
+            { tier: 'Non-Halal Income Pool (10% limit)', desc: 'Interest income, conventional insurance premiums, revenue from gambling, alcohol, tobacco, pork products, and other non-permissible activities' },
+        ]
+    },
+    msci: {
+        name: 'MSCI Islamic Index Screening',
+        authority: 'MSCI Inc.',
+        version: 'December 2024',
+        review: 'Semi-Annual',
+        fieldCount: '16 data fields',
+        thresholdCount: '4 compliance thresholds',
+        docLabel: 'MSCI_Islamic_Methodology.pdf',
+        insight: '🤖 <strong>AI Summary:</strong> MSCI Islamic applies three balance sheet screens using Total Assets as the denominator (debt ≤33.33%, cash & interest-bearing securities ≤33.33%, receivables + cash ≤70%) plus a revenue screen for non-permissible income (≤5%). MSCI uses buffer zones for index constituents (5% above entry thresholds) to reduce turnover.',
+        fields: [
+            'Total Assets', 'Total Debt', 'Cash & Interest-Bearing Securities',
+            'Accounts Receivable', 'Gross Revenue', 'Non-Permissible Revenue',
+            'Financial Year End', 'Reporting Currency', 'Average Market Cap (12-month)',
+            'Company Registration No.', 'GICS Sector', 'Audited Flag',
+            'Screening Period', 'Index Constituent Flag', 'Country of Domicile', 'Exchange Listing'
+        ],
+        thresholds: [
+            { label: 'Total Debt / Total Assets', value: 33.33, unit: '%', type: 'max' },
+            { label: 'Cash & Interest-Bearing Securities / Total Assets', value: 33.33, unit: '%', type: 'max' },
+            { label: '(Accounts Receivable + Cash) / Total Assets', value: 70, unit: '%', type: 'max' },
+            { label: 'Non-Permissible Revenue / Total Revenue', value: 5, unit: '%', type: 'max' },
+        ],
+        activities: [
+            { tier: 'Business Screen (exclusion)', desc: 'Alcohol, tobacco, pork, conventional financial services, weapons, gambling, adult entertainment, music/cinema with objectionable content' },
+            { tier: 'Revenue Screen (≤5%)', desc: 'Incidental non-permissible revenue — hotels, airlines, supermarkets with non-halal sections' },
+        ]
+    },
+    dj: {
+        name: 'Dow Jones Islamic Market Screening',
+        authority: 'S&P Dow Jones Indices',
+        version: '2024 Methodology',
+        review: 'Annual',
+        fieldCount: '14 data fields',
+        thresholdCount: '3 compliance thresholds',
+        docLabel: 'DJIM_Index_Methodology.pdf',
+        insight: '🤖 <strong>AI Summary:</strong> The DJIM methodology is unique in using 24-month trailing average market capitalisation (not total assets) as the denominator for all three financial ratio screens: debt, cash & interest-bearing securities, and accounts receivable — each capped below 33%. This market-cap approach reduces distortion from balance sheet leverage.',
+        fields: [
+            'Total Debt', 'Cash & Interest-Bearing Securities', 'Accounts Receivable',
+            'Average Market Cap (24-month trailing)', 'Gross Revenue', 'Non-Permissible Revenue',
+            'Financial Year End', 'Reporting Currency', 'Company Registration No.',
+            'Sector Classification', 'Exchange Listing', 'Audited Flag',
+            'Screening Period', 'Country of Domicile'
+        ],
+        thresholds: [
+            { label: 'Total Debt / Average Market Cap (24-month)', value: 33, unit: '%', type: 'max' },
+            { label: 'Cash & Interest Securities / Average Market Cap (24-month)', value: 33, unit: '%', type: 'max' },
+            { label: 'Accounts Receivable / Average Market Cap (24-month)', value: 33, unit: '%', type: 'max' },
+        ],
+        activities: [
+            { tier: 'Business Screen (full exclusion)', desc: 'Alcohol, tobacco, pork, conventional financial services, defence/weapons, gambling, adult entertainment' },
+            { tier: 'Revenue Tolerance (≤5%)', desc: 'Ancillary non-permissible revenue streams' },
+        ]
+    },
+    aaoifi: {
+        name: 'AAOIFI Shariah Standard No. 21',
+        authority: 'AAOIFI',
+        version: 'SS No. 21 (Revised)',
+        review: 'Annual',
+        fieldCount: '15 data fields',
+        thresholdCount: '5 compliance thresholds',
+        docLabel: 'AAOIFI_SS21_Screening.pdf',
+        insight: '🤖 <strong>AI Summary:</strong> AAOIFI SS21 applies both a debt screen (interest-bearing debt ≤30% of total assets OR market cap) and an illiquid assets requirement (tangible + non-cash assets ≥51% of total assets) to ensure the company\'s shares represent real economic ownership. Non-permissible revenue is capped at 5% with a mandatory purification obligation on dividends received.',
+        fields: [
+            'Total Assets', 'Total Interest-Bearing Debt', 'Tangible Assets',
+            'Non-Cash Assets', 'Gross Revenue', 'Non-Permissible Revenue',
+            'Interest Income', 'Dividends Received', 'Average Market Cap',
+            'Financial Year End', 'Reporting Currency', 'Company Registration No.',
+            'Sector Classification', 'Audited Flag', 'Purification Amount'
+        ],
+        thresholds: [
+            { label: 'Interest-Bearing Debt / Total Assets', value: 30, unit: '%', type: 'max' },
+            { label: 'Interest-Bearing Debt / Market Cap', value: 30, unit: '%', type: 'max' },
+            { label: 'Illiquid (Tangible + Non-Cash) Assets / Total Assets', value: 51, unit: '%', type: 'min' },
+            { label: 'Non-Permissible Revenue / Total Revenue', value: 5, unit: '%', type: 'max' },
+            { label: 'Interest Income / Total Revenue', value: 5, unit: '%', type: 'max' },
+        ],
+        activities: [
+            { tier: 'Prohibited Activities (full exclusion)', desc: 'Riba-based finance, alcohol, pork, tobacco, weapons, gambling, immoral entertainment' },
+            { tier: 'Non-Permissible Revenue (≤5%, purification required)', desc: 'Incidental interest income, non-halal revenue streams — must be purified from dividends' },
+        ]
+    }
+};
+
+let selectedSample = null;
+let fileSelected = false;
+
+function selectSample(key) {
+    selectedSample = key;
+    fileSelected = false;
+    document.querySelectorAll('.bm-option').forEach(el => el.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+    document.getElementById('file-info').style.display = 'none';
+    enableAnalyze();
+}
+
+function handleFileSelect(input) {
+    if (!input.files.length) return;
+    const file = input.files[0];
+    fileSelected = true;
+    selectedSample = detectSampleFromFilename(file.name);
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('file-size').textContent = (file.size / 1024).toFixed(1) + ' KB';
+    document.getElementById('file-info').style.display = 'flex';
+    document.querySelectorAll('.bm-option').forEach(el => el.classList.remove('selected'));
+    enableAnalyze();
+}
+
+function detectSampleFromFilename(name) {
+    const lower = name.toLowerCase();
+    if (lower.includes('ojk') || lower.includes('pojk')) return 'ojk';
+    if (lower.includes('msci')) return 'msci';
+    if (lower.includes('dow') || lower.includes('djim')) return 'dj';
+    if (lower.includes('aaoifi')) return 'aaoifi';
+    return 'sc';
+}
+
+function enableAnalyze() {
+    const btn = document.getElementById('analyze-btn');
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+}
+
+const uploadZone = document.getElementById('upload-zone');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const dt = e.dataTransfer;
+    if (dt.files.length) {
+        document.getElementById('file-input').files = dt.files;
+        handleFileSelect(document.getElementById('file-input'));
+    }
+});
+
+function startAnalysis() {
+    const key = selectedSample || 'sc';
+    document.getElementById('upload-panel').style.display = 'none';
+    document.getElementById('processing-panel').style.display = 'block';
+    setStep(2);
+
+    const steps = ['pstep-1','pstep-2','pstep-3','pstep-4','pstep-5','pstep-6'];
+    const delays = [600, 1400, 2300, 3200, 4000, 4800];
+    const doneAt = [900, 1800, 2800, 3700, 4500, 5300];
+
+    steps.forEach((id, i) => {
+        setTimeout(() => {
+            document.getElementById(id).classList.add('running');
+            document.getElementById(id).querySelector('.icon').innerHTML = '<i class="fas fa-circle-notch spinner" style="color:#3b82f6;"></i>';
+        }, delays[i]);
+        setTimeout(() => {
+            document.getElementById(id).classList.remove('running');
+            document.getElementById(id).classList.add('done');
+            document.getElementById(id).querySelector('.icon').innerHTML = '<i class="fas fa-check" style="color:#22c55e;"></i>';
+        }, doneAt[i]);
+    });
+
+    setTimeout(() => showResult(key), 5800);
+}
+
+function showResult(key) {
+    const data = BENCHMARK_DATA[key];
+    document.getElementById('processing-panel').style.display = 'none';
+    document.getElementById('result-panel').style.display = 'block';
+    setStep(3);
+
+    document.getElementById('field-count').textContent = data.fieldCount;
+    document.getElementById('threshold-count').textContent = data.thresholdCount;
+    document.getElementById('doc-label').textContent = data.docLabel;
+    document.getElementById('ai-insight').innerHTML = data.insight;
+    document.getElementById('bm-name').value = data.name;
+    document.getElementById('bm-authority').value = data.authority;
+    document.getElementById('bm-version').value = data.version;
+
+    // Data fields
+    const grid = document.getElementById('data-fields-grid');
+    grid.innerHTML = data.fields.map(f => `
+        <div class="form-field">
+            <label>${f}</label>
+            <input type="text" placeholder="e.g. RM / USD" value="">
+        </div>
+    `).join('');
+
+    // Thresholds
+    const tContainer = document.getElementById('thresholds-container');
+    tContainer.innerHTML = data.thresholds.map(t => `
+        <div class="threshold-row">
+            <div class="label">${t.label}</div>
+            <span class="type-badge ${t.type}">${t.type === 'max' ? '≤ MAX' : '≥ MIN'}</span>
+            <input type="number" value="${t.value}" step="0.01">
+            <span class="unit">${t.unit}</span>
+        </div>
+    `).join('');
+
+    // Activities
+    const aContainer = document.getElementById('activities-container');
+    aContainer.innerHTML = data.activities.map(a => `
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; margin-bottom:10px;">
+            <div style="font-weight:700; font-size:0.88em; color:#1e293b; margin-bottom:4px;">
+                <i class="fas fa-tag" style="color:#f59e0b; margin-right:6px;"></i>${a.tier}
+            </div>
+            <div style="font-size:0.85em; color:#64748b;">${a.desc}</div>
+        </div>
+    `).join('');
+}
+
+function setStep(n) {
+    for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById('step-' + i);
+        el.classList.remove('active', 'done');
+        if (i < n) el.classList.add('done');
+        else if (i === n) el.classList.add('active');
+    }
+}
+
+function activateBenchmark() {
+    setStep(4);
+    showToast('Benchmark activated and added to iScreening!');
+    setTimeout(() => { window.location.href = '/'; }, 2200);
+}
+
+function showToast(msg) {
+    const t = document.getElementById('success-toast');
+    document.getElementById('toast-msg').textContent = msg || 'Configuration exported successfully!';
+    t.style.display = 'flex';
+    setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+function resetToUpload() {
+    document.getElementById('result-panel').style.display = 'none';
+    document.getElementById('upload-panel').style.display = 'block';
+    document.getElementById('processing-panel').style.display = 'none';
+    document.querySelectorAll('.processing-steps li').forEach(li => {
+        li.classList.remove('running', 'done');
+        li.querySelector('.icon').innerHTML = '<i class="fas fa-circle" style="font-size:0.5em; color:#e2e8f0;"></i>';
+    });
+    const btn = document.getElementById('analyze-btn');
+    btn.disabled = true; btn.style.opacity = '0.5'; btn.style.cursor = 'not-allowed';
+    selectedSample = null; fileSelected = false;
+    document.getElementById('file-info').style.display = 'none';
+    document.querySelectorAll('.bm-option').forEach(el => el.classList.remove('selected'));
+    setStep(1);
+}
+</script>
+</body>
+</html>

@@ -33,6 +33,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Review Company - iScreening.html'));
 });
 
+// Benchmark creator route
+app.get('/benchmark-creator', (req, res) => {
+  res.sendFile(path.join(__dirname, 'benchmark-creator.html'));
+});
+
 // Load mock companies data
 const companiesPath = path.join(__dirname, 'MockData', 'companies.json');
 let companiesData = [];
