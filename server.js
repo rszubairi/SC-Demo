@@ -10,9 +10,28 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// CSP headers
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; " +
+    "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://frontend-cdn.perplexity.ai; " +
+    "img-src 'self' data: https:; " +
+    "connect-src 'self' https:; " +
+    "frame-src 'self';"
+  );
+  next();
+});
+
 // Serve static files from files directory and root
 app.use('/Review Company - iScreening_files', express.static(path.join(__dirname, 'Review Company - iScreening_files')));
 app.use(express.static(__dirname));
+
+// Root route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Review Company - iScreening.html'));
+});
 
 // Load mock companies data
 const companiesPath = path.join(__dirname, 'MockData', 'companies.json');
