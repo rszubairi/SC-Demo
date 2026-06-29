@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   res.setHeader('Content-Security-Policy',
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; " +
     "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://frontend-cdn.perplexity.ai; " +
     "img-src 'self' data: https:; " +
@@ -22,6 +22,31 @@ app.use((req, res, next) => {
     "frame-src 'self';"
   );
   next();
+});
+
+// LM Studio proxy — avoids CORS when browser calls a remote LM Studio instance
+const LM_STUDIO_ORIGIN = 'http://192.168.50.75:1234';
+app.get('/lm/models', async (req, res) => {
+  try {
+    const r = await fetch(`${LM_STUDIO_ORIGIN}/v1/models`);
+    const data = await r.json();
+    res.json(data);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
+});
+app.post('/lm/chat', express.json({ limit: '20mb' }), async (req, res) => {
+  try {
+    const r = await fetch(`${LM_STUDIO_ORIGIN}/v1/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(req.body)
+    });
+    const data = await r.json();
+    res.json(data);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
 });
 
 // Serve static files from files directory and root
